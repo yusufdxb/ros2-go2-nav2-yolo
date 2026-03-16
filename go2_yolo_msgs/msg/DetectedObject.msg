@@ -1,0 +1,9 @@
+# go2_yolo_msgs/msg/DetectedObject.msg
+string class_name
+int32 class_id
+float32 confidence
+geometry_msgs/Point position
+int32 bbox_x1
+int32 bbox_y1
+int32 bbox_x2
+int32 bbox_y2

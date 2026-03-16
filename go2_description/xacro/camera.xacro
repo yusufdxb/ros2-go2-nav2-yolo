@@ -1,0 +1,147 @@
+<!-- GO2 Robot Description with RGB-D Camera Plugin
+     Based on: https://github.com/arjun-sadananda/go2_nav2_ros2
+     Added: Gazebo RGB-D camera plugin for YOLOv8 + depth
+
+     Full mesh files and full URDF come from the upstream go2_nav2_ros2 repo.
+     Clone it and use go2_description from there — this file shows
+     the camera xacro addition to include in go2_robot.xacro.
+-->
+<robot name="go2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Include base GO2 description from upstream -->
+  <!-- xacro:include filename="$(find go2_description)/xacro/go2_base.xacro"/ -->
+
+  <!-- ══════════════════════════════════════════════════════
+       RGB-D Camera — mounted on GO2 head
+       Add this block to your go2_robot.xacro
+       ══════════════════════════════════════════════════════ -->
+
+  <link name="camera_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.09 0.025"/>
+      </geometry>
+      <material name="dark_grey">
+        <color rgba="0.2 0.2 0.2 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.09 0.025"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.072"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
+    </inertial>
+  </link>
+
+  <!-- Mount camera on head / trunk_link — adjust xyz to match GO2 head position -->
+  <joint name="camera_joint" type="fixed">
+    <parent link="trunk"/>   <!-- Change to correct GO2 base link name -->
+    <child link="camera_link"/>
+    <!-- Position: front of robot, at head height, facing forward -->
+    <origin xyz="0.28 0.0 0.12" rpy="0 0.15 0"/>
+  </joint>
+
+  <!-- Optical frame (ROS convention: z forward, x right, y down) -->
+  <link name="camera_color_optical_frame"/>
+  <joint name="camera_color_optical_joint" type="fixed">
+    <parent link="camera_link"/>
+    <child link="camera_color_optical_frame"/>
+    <origin xyz="0 0 0" rpy="-1.5708 0 -1.5708"/>
+  </joint>
+
+  <link name="camera_depth_optical_frame"/>
+  <joint name="camera_depth_optical_joint" type="fixed">
+    <parent link="camera_link"/>
+    <child link="camera_depth_optical_frame"/>
+    <origin xyz="0 0 0" rpy="-1.5708 0 -1.5708"/>
+  </joint>
+
+  <!-- ══════════════════════════════════════════════════════
+       Gazebo RGB Camera Plugin
+       ══════════════════════════════════════════════════════ -->
+  <gazebo reference="camera_link">
+    <sensor type="camera" name="go2_rgb_camera">
+      <update_rate>30</update_rate>
+      <camera name="go2_camera">
+        <horizontal_fov>1.3962634</horizontal_fov>  <!-- 80 degrees -->
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.05</near>
+          <far>15.0</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <plugin name="go2_camera_controller" filename="libgazebo_ros_camera.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>30.0</updateRate>
+        <cameraName>go2/camera</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <frameName>camera_color_optical_frame</frameName>
+        <hackBaseline>0.0</hackBaseline>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- ══════════════════════════════════════════════════════
+       Gazebo Depth Camera Plugin
+       ══════════════════════════════════════════════════════ -->
+  <gazebo reference="camera_link">
+    <sensor type="depth" name="go2_depth_camera">
+      <update_rate>15</update_rate>
+      <camera>
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.05</near>
+          <far>8.0</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </camera>
+      <plugin name="go2_depth_controller" filename="libgazebo_ros_openni_kinect.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>15.0</updateRate>
+        <cameraName>go2/camera</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <depthImageTopicName>depth/image_raw</depthImageTopicName>
+        <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+        <pointCloudTopicName>depth/points</pointCloudTopicName>
+        <frameName>camera_depth_optical_frame</frameName>
+        <pointCloudCutoff>0.05</pointCloudCutoff>
+        <pointCloudCutoffMax>8.0</pointCloudCutoffMax>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>
