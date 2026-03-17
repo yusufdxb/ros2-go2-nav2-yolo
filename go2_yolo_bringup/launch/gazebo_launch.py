@@ -18,6 +18,7 @@ from launch.actions import (
     DeclareLaunchArgument,
     IncludeLaunchDescription,
     RegisterEventHandler,
+    TimerAction,
 )
 from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -140,12 +141,17 @@ def generate_launch_description():
         )
     )
 
+    # Delay spawn by 5s to allow Gazebo's rendering scene to fully initialize
+    # before camera sensor plugins are loaded (prevents boost::shared_ptr<Scene>
+    # assertion crash in Gazebo 11).
+    delayed_spawn = TimerAction(period=5.0, actions=[spawn_robot])
+
     return LaunchDescription([
         declare_sim_time,
         declare_world,
         gazebo,
-        spawn_robot,
         champ_bringup,
+        delayed_spawn,
         delay_jsb,
         delay_jec,
     ])

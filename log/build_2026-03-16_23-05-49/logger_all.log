@@ -1,0 +1,223 @@
+[0.143s] colcon DEBUG Command line arguments: ['/home/carebear/.local/bin/colcon', 'build', '--packages-select', 'go2_description', 'go2_yolo_bringup']
+[0.143s] colcon DEBUG Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=12, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=['go2_description', 'go2_yolo_bringup'], packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7062d6c32110>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7062d6c31b40>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7062d6c31b40>>)
+[0.370s] colcon.colcon_core.package_discovery Level 1 discover_packages(colcon_meta) check parameters
+[0.370s] colcon.colcon_core.package_discovery Level 1 discover_packages(recursive) check parameters
+[0.370s] colcon.colcon_core.package_discovery Level 1 discover_packages(ignore) check parameters
+[0.370s] colcon.colcon_core.package_discovery Level 1 discover_packages(path) check parameters
+[0.370s] colcon.colcon_core.package_discovery Level 1 discover_packages(colcon_meta) discover
+[0.370s] colcon.colcon_core.package_discovery Level 1 discover_packages(recursive) discover
+[0.370s] colcon.colcon_core.package_discovery INFO Crawling recursively for packages in '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo'
+[0.370s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.370s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'ignore'
+[0.371s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'ignore_ament_install'
+[0.371s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['colcon_pkg']
+[0.371s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'colcon_pkg'
+[0.371s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['colcon_meta']
+[0.371s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'colcon_meta'
+[0.371s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['ros']
+[0.371s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'ros'
+[0.384s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['cmake', 'python']
+[0.384s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'cmake'
+[0.384s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'python'
+[0.384s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['python_setup_py']
+[0.384s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'python_setup_py'
+[0.384s] colcon.colcon_core.package_identification Level 1 _identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.384s] colcon.colcon_core.package_identification Level 1 _identify(build) by extension 'ignore'
+[0.384s] colcon.colcon_core.package_identification Level 1 _identify(build) ignored
+[0.384s] colcon.colcon_core.package_identification Level 1 _identify(go2_description) by extensions ['ignore', 'ignore_ament_install']
+[0.385s] colcon.colcon_core.package_identification Level 1 _identify(go2_description) by extension 'ignore'
+[0.385s] colcon.colcon_core.package_identification Level 1 _identify(go2_description) by extension 'ignore_ament_install'
+[0.385s] colcon.colcon_core.package_identification Level 1 _identify(go2_description) by extensions ['colcon_pkg']
+[0.385s] colcon.colcon_core.package_identification Level 1 _identify(go2_description) by extension 'colcon_pkg'
+[0.385s] colcon.colcon_core.package_identification Level 1 _identify(go2_description) by extensions ['colcon_meta']
+[0.385s] colcon.colcon_core.package_identification Level 1 _identify(go2_description) by extension 'colcon_meta'
+[0.385s] colcon.colcon_core.package_identification Level 1 _identify(go2_description) by extensions ['ros']
+[0.385s] colcon.colcon_core.package_identification Level 1 _identify(go2_description) by extension 'ros'
+[0.387s] colcon.colcon_core.package_identification DEBUG Package 'go2_description' with type 'ros.ament_cmake' and name 'go2_description'
+[0.387s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_bringup) by extensions ['ignore', 'ignore_ament_install']
+[0.387s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_bringup) by extension 'ignore'
+[0.387s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_bringup) by extension 'ignore_ament_install'
+[0.387s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_bringup) by extensions ['colcon_pkg']
+[0.387s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_bringup) by extension 'colcon_pkg'
+[0.387s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_bringup) by extensions ['colcon_meta']
+[0.387s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_bringup) by extension 'colcon_meta'
+[0.387s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_bringup) by extensions ['ros']
+[0.387s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_bringup) by extension 'ros'
+[0.388s] colcon.colcon_core.package_identification DEBUG Package 'go2_yolo_bringup' with type 'ros.ament_cmake' and name 'go2_yolo_bringup'
+[0.388s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_detector) by extensions ['ignore', 'ignore_ament_install']
+[0.388s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_detector) by extension 'ignore'
+[0.388s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_detector) by extension 'ignore_ament_install'
+[0.388s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_detector) by extensions ['colcon_pkg']
+[0.388s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_detector) by extension 'colcon_pkg'
+[0.388s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_detector) by extensions ['colcon_meta']
+[0.388s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_detector) by extension 'colcon_meta'
+[0.388s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_detector) by extensions ['ros']
+[0.388s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_detector) by extension 'ros'
+[0.389s] colcon.colcon_core.package_identification DEBUG Package 'go2_yolo_detector' with type 'ros.ament_python' and name 'go2_yolo_detector'
+[0.389s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_msgs) by extensions ['ignore', 'ignore_ament_install']
+[0.389s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_msgs) by extension 'ignore'
+[0.389s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_msgs) by extension 'ignore_ament_install'
+[0.389s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_msgs) by extensions ['colcon_pkg']
+[0.389s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_msgs) by extension 'colcon_pkg'
+[0.389s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_msgs) by extensions ['colcon_meta']
+[0.389s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_msgs) by extension 'colcon_meta'
+[0.389s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_msgs) by extensions ['ros']
+[0.389s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_msgs) by extension 'ros'
+[0.390s] colcon.colcon_core.package_identification DEBUG Package 'go2_yolo_msgs' with type 'ros.ament_cmake' and name 'go2_yolo_msgs'
+[0.390s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_navigator) by extensions ['ignore', 'ignore_ament_install']
+[0.390s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_navigator) by extension 'ignore'
+[0.390s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_navigator) by extension 'ignore_ament_install'
+[0.390s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_navigator) by extensions ['colcon_pkg']
+[0.390s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_navigator) by extension 'colcon_pkg'
+[0.390s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_navigator) by extensions ['colcon_meta']
+[0.390s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_navigator) by extension 'colcon_meta'
+[0.390s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_navigator) by extensions ['ros']
+[0.390s] colcon.colcon_core.package_identification Level 1 _identify(go2_yolo_navigator) by extension 'ros'
+[0.391s] colcon.colcon_core.package_identification DEBUG Package 'go2_yolo_navigator' with type 'ros.ament_python' and name 'go2_yolo_navigator'
+[0.391s] colcon.colcon_core.package_identification Level 1 _identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.391s] colcon.colcon_core.package_identification Level 1 _identify(install) by extension 'ignore'
+[0.391s] colcon.colcon_core.package_identification Level 1 _identify(install) ignored
+[0.391s] colcon.colcon_core.package_identification Level 1 _identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.392s] colcon.colcon_core.package_identification Level 1 _identify(log) by extension 'ignore'
+[0.392s] colcon.colcon_core.package_identification Level 1 _identify(log) ignored
+[0.392s] colcon.colcon_core.package_discovery Level 1 discover_packages(recursive) using defaults
+[0.392s] colcon.colcon_core.package_discovery Level 1 discover_packages(ignore) discover
+[0.392s] colcon.colcon_core.package_discovery Level 1 discover_packages(ignore) using defaults
+[0.392s] colcon.colcon_core.package_discovery Level 1 discover_packages(path) discover
+[0.392s] colcon.colcon_core.package_discovery Level 1 discover_packages(path) using defaults
+[0.409s] colcon.colcon_core.package_selection INFO Skipping not selected package 'go2_yolo_msgs' in 'go2_yolo_msgs'
+[0.409s] colcon.colcon_core.package_selection INFO Skipping not selected package 'go2_yolo_detector' in 'go2_yolo_detector'
+[0.409s] colcon.colcon_core.package_selection INFO Skipping not selected package 'go2_yolo_navigator' in 'go2_yolo_navigator'
+[0.410s] colcon.colcon_core.package_discovery Level 1 discover_packages(prefix_path) check parameters
+[0.410s] colcon.colcon_core.package_discovery Level 1 discover_packages(prefix_path) discover
+[0.413s] colcon.colcon_installed_package_information.package_discovery DEBUG Found 401 installed packages in /opt/ros/humble
+[0.414s] colcon.colcon_core.package_discovery Level 1 discover_packages(prefix_path) using defaults
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_description' build argument 'cmake_args' from command line to 'None'
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_description' build argument 'cmake_target' from command line to 'None'
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_description' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_description' build argument 'cmake_clean_cache' from command line to 'False'
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_description' build argument 'cmake_clean_first' from command line to 'False'
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_description' build argument 'cmake_force_configure' from command line to 'False'
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_description' build argument 'ament_cmake_args' from command line to 'None'
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_description' build argument 'catkin_cmake_args' from command line to 'None'
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_description' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.465s] colcon.colcon_core.verb DEBUG Building package 'go2_description' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_description', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description', 'merge_install': False, 'path': '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/go2_description', 'symlink_install': False, 'test_result_base': None}
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_yolo_bringup' build argument 'cmake_args' from command line to 'None'
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_yolo_bringup' build argument 'cmake_target' from command line to 'None'
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_yolo_bringup' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_yolo_bringup' build argument 'cmake_clean_cache' from command line to 'False'
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_yolo_bringup' build argument 'cmake_clean_first' from command line to 'False'
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_yolo_bringup' build argument 'cmake_force_configure' from command line to 'False'
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_yolo_bringup' build argument 'ament_cmake_args' from command line to 'None'
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_yolo_bringup' build argument 'catkin_cmake_args' from command line to 'None'
+[0.465s] colcon.colcon_core.verb Level 5 set package 'go2_yolo_bringup' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.465s] colcon.colcon_core.verb DEBUG Building package 'go2_yolo_bringup' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup', 'merge_install': False, 'path': '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/go2_yolo_bringup', 'symlink_install': False, 'test_result_base': None}
+[0.466s] colcon.colcon_core.executor INFO Executing jobs using 'parallel' executor
+[0.466s] colcon.colcon_parallel_executor.executor.parallel DEBUG run_until_complete
+[0.467s] colcon.colcon_ros.task.ament_cmake.build INFO Building ROS package in '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/go2_description' with build type 'ament_cmake'
+[0.467s] colcon.colcon_cmake.task.cmake.build INFO Building CMake package in '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/go2_description'
+[0.469s] colcon.colcon_core.plugin_system INFO Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.469s] colcon.colcon_core.shell INFO Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.469s] colcon.colcon_core.shell DEBUG Skip shell extension 'dsv' for command environment
+[0.476s] colcon.colcon_core.event_handler.log_command DEBUG Invoking command in '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/go2_description -DCMAKE_INSTALL_PREFIX=/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description
+[1.659s] colcon.colcon_core.event_handler.log_command DEBUG Invoked command in '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/go2_description -DCMAKE_INSTALL_PREFIX=/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description
+[1.661s] colcon.colcon_core.event_handler.log_command DEBUG Invoking command in '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_description -- -j12 -l12
+[1.692s] colcon.colcon_core.event_handler.log_command DEBUG Invoked command in '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_description -- -j12 -l12
+[1.701s] colcon.colcon_core.event_handler.log_command DEBUG Invoking command in '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_description
+[1.752s] colcon.colcon_core.environment Level 1 create_environment_scripts_only(go2_description)
+[1.753s] colcon.colcon_core.event_handler.log_command DEBUG Invoked command in '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_description
+[1.755s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description' for CMake module files
+[1.756s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description' for CMake config files
+[1.756s] colcon.colcon_core.shell Level 1 create_environment_hook('go2_description', 'cmake_prefix_path')
+[1.756s] colcon.colcon_core.shell INFO Creating environment hook '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/go2_description/hook/cmake_prefix_path.ps1'
+[1.756s] colcon.colcon_core.shell INFO Creating environment descriptor '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/go2_description/hook/cmake_prefix_path.dsv'
+[1.757s] colcon.colcon_core.shell INFO Creating environment hook '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/go2_description/hook/cmake_prefix_path.sh'
+[1.757s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/bin'
+[1.758s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/lib/pkgconfig/go2_description.pc'
+[1.758s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/lib/python3.10/site-packages'
+[1.758s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/bin'
+[1.758s] colcon.colcon_core.shell INFO Creating package script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/go2_description/package.ps1'
+[1.759s] colcon.colcon_core.shell INFO Creating package descriptor '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/go2_description/package.dsv'
+[1.759s] colcon.colcon_core.shell INFO Creating package script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/go2_description/package.sh'
+[1.760s] colcon.colcon_core.shell INFO Creating package script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/go2_description/package.bash'
+[1.761s] colcon.colcon_core.shell INFO Creating package script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/go2_description/package.zsh'
+[1.761s] colcon.colcon_core.environment Level 1 create_file_with_runtime_dependencies(/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/colcon-core/packages/go2_description)
+[1.762s] colcon.colcon_core.environment Level 1 create_environment_scripts_only(go2_description)
+[1.762s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description' for CMake module files
+[1.762s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description' for CMake config files
+[1.762s] colcon.colcon_core.shell Level 1 create_environment_hook('go2_description', 'cmake_prefix_path')
+[1.763s] colcon.colcon_core.shell INFO Creating environment hook '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/go2_description/hook/cmake_prefix_path.ps1'
+[1.763s] colcon.colcon_core.shell INFO Creating environment descriptor '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/go2_description/hook/cmake_prefix_path.dsv'
+[1.763s] colcon.colcon_core.shell INFO Creating environment hook '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/go2_description/hook/cmake_prefix_path.sh'
+[1.764s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/bin'
+[1.764s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/lib/pkgconfig/go2_description.pc'
+[1.764s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/lib/python3.10/site-packages'
+[1.764s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/bin'
+[1.764s] colcon.colcon_core.shell INFO Creating package script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/go2_description/package.ps1'
+[1.765s] colcon.colcon_core.shell INFO Creating package descriptor '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/go2_description/package.dsv'
+[1.765s] colcon.colcon_core.shell INFO Creating package script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/go2_description/package.sh'
+[1.765s] colcon.colcon_core.shell INFO Creating package script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/go2_description/package.bash'
+[1.766s] colcon.colcon_core.shell INFO Creating package script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/go2_description/package.zsh'
+[1.766s] colcon.colcon_core.environment Level 1 create_file_with_runtime_dependencies(/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description/share/colcon-core/packages/go2_description)
+[1.766s] colcon.colcon_ros.task.ament_cmake.build INFO Building ROS package in '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/go2_yolo_bringup' with build type 'ament_cmake'
+[1.766s] colcon.colcon_cmake.task.cmake.build INFO Building CMake package in '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/go2_yolo_bringup'
+[1.767s] colcon.colcon_core.shell INFO Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.767s] colcon.colcon_core.shell DEBUG Skip shell extension 'dsv' for command environment
+[1.773s] colcon.colcon_core.event_handler.log_command DEBUG Invoking command in '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup': AMENT_PREFIX_PATH=/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description:/opt/ros/humble /usr/bin/cmake /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/go2_yolo_bringup -DCMAKE_INSTALL_PREFIX=/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup
+[2.968s] colcon.colcon_core.event_handler.log_command DEBUG Invoked command in '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup' returned '0': AMENT_PREFIX_PATH=/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description:/opt/ros/humble /usr/bin/cmake /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/go2_yolo_bringup -DCMAKE_INSTALL_PREFIX=/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup
+[2.969s] colcon.colcon_core.event_handler.log_command DEBUG Invoking command in '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup': AMENT_PREFIX_PATH=/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description:/opt/ros/humble /usr/bin/cmake --build /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup -- -j12 -l12
+[3.000s] colcon.colcon_core.event_handler.log_command DEBUG Invoked command in '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup' returned '0': AMENT_PREFIX_PATH=/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description:/opt/ros/humble /usr/bin/cmake --build /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup -- -j12 -l12
+[3.001s] colcon.colcon_core.event_handler.log_command DEBUG Invoking command in '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup': AMENT_PREFIX_PATH=/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description:/opt/ros/humble /usr/bin/cmake --install /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup
+[3.013s] colcon.colcon_core.environment Level 1 create_environment_scripts_only(go2_yolo_bringup)
+[3.013s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup' for CMake module files
+[3.013s] colcon.colcon_core.event_handler.log_command DEBUG Invoked command in '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup' returned '0': AMENT_PREFIX_PATH=/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_description:/opt/ros/humble /usr/bin/cmake --install /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup
+[3.014s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup' for CMake config files
+[3.014s] colcon.colcon_core.shell Level 1 create_environment_hook('go2_yolo_bringup', 'cmake_prefix_path')
+[3.015s] colcon.colcon_core.shell INFO Creating environment hook '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/hook/cmake_prefix_path.ps1'
+[3.015s] colcon.colcon_core.shell INFO Creating environment descriptor '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/hook/cmake_prefix_path.dsv'
+[3.016s] colcon.colcon_core.shell INFO Creating environment hook '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/hook/cmake_prefix_path.sh'
+[3.016s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/bin'
+[3.016s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/lib/pkgconfig/go2_yolo_bringup.pc'
+[3.016s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/lib/python3.10/site-packages'
+[3.017s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/bin'
+[3.017s] colcon.colcon_core.shell INFO Creating package script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/package.ps1'
+[3.017s] colcon.colcon_core.shell INFO Creating package descriptor '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/package.dsv'
+[3.018s] colcon.colcon_core.shell INFO Creating package script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/package.sh'
+[3.018s] colcon.colcon_core.shell INFO Creating package script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/package.bash'
+[3.018s] colcon.colcon_core.shell INFO Creating package script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/package.zsh'
+[3.019s] colcon.colcon_core.environment Level 1 create_file_with_runtime_dependencies(/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/colcon-core/packages/go2_yolo_bringup)
+[3.019s] colcon.colcon_core.environment Level 1 create_environment_scripts_only(go2_yolo_bringup)
+[3.019s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup' for CMake module files
+[3.020s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup' for CMake config files
+[3.020s] colcon.colcon_core.shell Level 1 create_environment_hook('go2_yolo_bringup', 'cmake_prefix_path')
+[3.020s] colcon.colcon_core.shell INFO Creating environment hook '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/hook/cmake_prefix_path.ps1'
+[3.020s] colcon.colcon_core.shell INFO Creating environment descriptor '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/hook/cmake_prefix_path.dsv'
+[3.021s] colcon.colcon_core.shell INFO Creating environment hook '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/hook/cmake_prefix_path.sh'
+[3.021s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/bin'
+[3.021s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/lib/pkgconfig/go2_yolo_bringup.pc'
+[3.022s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/lib/python3.10/site-packages'
+[3.022s] colcon.colcon_core.environment Level 1 checking '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/bin'
+[3.022s] colcon.colcon_core.shell INFO Creating package script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/package.ps1'
+[3.023s] colcon.colcon_core.shell INFO Creating package descriptor '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/package.dsv'
+[3.023s] colcon.colcon_core.shell INFO Creating package script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/package.sh'
+[3.023s] colcon.colcon_core.shell INFO Creating package script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/package.bash'
+[3.024s] colcon.colcon_core.shell INFO Creating package script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/package.zsh'
+[3.024s] colcon.colcon_core.environment Level 1 create_file_with_runtime_dependencies(/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/colcon-core/packages/go2_yolo_bringup)
+[3.024s] colcon.colcon_parallel_executor.executor.parallel DEBUG closing loop
+[3.024s] colcon.colcon_parallel_executor.executor.parallel DEBUG loop closed
+[3.024s] colcon.colcon_parallel_executor.executor.parallel DEBUG run_until_complete finished with '0'
+[3.024s] colcon.colcon_core.event_reactor DEBUG joining thread
+[3.029s] colcon.colcon_core.plugin_system INFO Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[3.029s] colcon.colcon_core.plugin_system INFO Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[3.029s] colcon.colcon_notification.desktop_notification INFO Sending desktop notification using 'notify2'
+[3.039s] colcon.colcon_core.event_reactor DEBUG joined thread
+[3.039s] colcon.colcon_core.shell INFO Creating prefix script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/local_setup.ps1'
+[3.040s] colcon.colcon_core.shell INFO Creating prefix util module '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/_local_setup_util_ps1.py'
+[3.041s] colcon.colcon_core.shell INFO Creating prefix chain script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/setup.ps1'
+[3.042s] colcon.colcon_core.shell INFO Creating prefix script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/local_setup.sh'
+[3.042s] colcon.colcon_core.shell INFO Creating prefix util module '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/_local_setup_util_sh.py'
+[3.043s] colcon.colcon_core.shell INFO Creating prefix chain script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/setup.sh'
+[3.044s] colcon.colcon_core.shell INFO Creating prefix script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/local_setup.bash'
+[3.044s] colcon.colcon_core.shell INFO Creating prefix chain script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/setup.bash'
+[3.045s] colcon.colcon_core.shell INFO Creating prefix script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/local_setup.zsh'
+[3.045s] colcon.colcon_core.shell INFO Creating prefix chain script '/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/setup.zsh'

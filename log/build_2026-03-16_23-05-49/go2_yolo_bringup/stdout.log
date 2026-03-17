@@ -1,0 +1,50 @@
+-- The C compiler identification is GNU 11.4.0
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup
+-- Install configuration: ""
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/launch
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/launch/gazebo_launch.py
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/launch/navigation_launch.py
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/launch/yolo_nav_launch.py
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/config
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/config/nav2_params.yaml
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/config/joints
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/config/joints/joints.yaml
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/config/slam_params.yaml
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/config/gait
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/config/gait/gait.yaml
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/config/links
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/config/links/links.yaml
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/worlds
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/worlds/demo_world.world
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/rviz
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/rviz/go2_nav2_yolo.rviz
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/ament_index/resource_index/package_run_dependencies/go2_yolo_bringup
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/ament_index/resource_index/parent_prefix_path/go2_yolo_bringup
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/environment/ament_prefix_path.sh
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/environment/ament_prefix_path.dsv
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/environment/path.sh
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/environment/path.dsv
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/local_setup.bash
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/local_setup.sh
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/local_setup.zsh
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/local_setup.dsv
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/package.dsv
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/ament_index/resource_index/packages/go2_yolo_bringup
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/cmake/go2_yolo_bringupConfig.cmake
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/cmake/go2_yolo_bringupConfig-version.cmake
+-- Installing: /home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/install/go2_yolo_bringup/share/go2_yolo_bringup/package.xml

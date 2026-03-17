@@ -1,0 +1,131 @@
+<!-- GO2 Robot Description with RGB-D Camera Plugin
+     Based on: https://github.com/arjun-sadananda/go2_nav2_ros2
+     Added: Gazebo RGB-D camera plugin for YOLOv8 + depth
+
+     Full mesh files and full URDF come from the upstream go2_nav2_ros2 repo.
+     Clone it and use go2_description from there — this file shows
+     the camera xacro addition to include in go2_robot.xacro.
+-->
+<robot name="go2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Include base GO2 description from upstream -->
+  <!-- xacro:include filename="$(find go2_description)/xacro/go2_base.xacro"/ -->
+
+  <!-- ══════════════════════════════════════════════════════
+       RGB-D Camera — mounted on GO2 head
+       Add this block to your go2_robot.xacro
+       ══════════════════════════════════════════════════════ -->
+
+  <link name="camera_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.09 0.025"/>
+      </geometry>
+      <material name="dark_grey">
+        <color rgba="0.2 0.2 0.2 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.09 0.025"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.072"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
+    </inertial>
+  </link>
+
+  <!-- Mount camera on head / trunk_link — adjust xyz to match GO2 head position -->
+  <joint name="camera_joint" type="fixed">
+    <parent link="trunk"/>   <!-- Change to correct GO2 base link name -->
+    <child link="camera_link"/>
+    <!-- Position: front of robot, at head height, facing forward -->
+    <origin xyz="0.28 0.0 0.12" rpy="0 0.15 0"/>
+  </joint>
+
+  <!-- Optical frame (ROS convention: z forward, x right, y down) -->
+  <link name="camera_color_optical_frame"/>
+  <joint name="camera_color_optical_joint" type="fixed">
+    <parent link="camera_link"/>
+    <child link="camera_color_optical_frame"/>
+    <origin xyz="0 0 0" rpy="-1.5708 0 -1.5708"/>
+  </joint>
+
+  <link name="camera_depth_optical_frame"/>
+  <joint name="camera_depth_optical_joint" type="fixed">
+    <parent link="camera_link"/>
+    <child link="camera_depth_optical_frame"/>
+    <origin xyz="0 0 0" rpy="-1.5708 0 -1.5708"/>
+  </joint>
+
+  <!-- ══════════════════════════════════════════════════════
+       Gazebo RGB + Depth Camera Plugins — single gazebo block
+       (two separate <gazebo reference="camera_link"> blocks cause
+        a boost::shared_ptr<Scene> assertion crash in Gazebo 11)
+       Topics: /go2/camera/image_raw, /go2/camera/camera_info
+               /go2/camera/depth/image_raw, /go2/camera/depth/camera_info
+       ══════════════════════════════════════════════════════ -->
+  <gazebo reference="camera_link">
+    <sensor type="camera" name="go2_rgb_camera">
+      <update_rate>30</update_rate>
+      <camera name="go2_camera">
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.05</near>
+          <far>15.0</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <plugin name="go2_camera_controller" filename="libgazebo_ros_camera.so">
+        <ros>
+          <namespace>/go2</namespace>
+        </ros>
+        <camera_name>camera</camera_name>
+        <frame_name>camera_color_optical_frame</frame_name>
+      </plugin>
+    </sensor>
+    <sensor type="depth" name="go2_depth_camera">
+      <update_rate>15</update_rate>
+      <camera name="go2_depth">
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.05</near>
+          <far>8.0</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </camera>
+      <plugin name="go2_depth_controller" filename="libgazebo_ros_openni_kinect.so">
+        <ros>
+          <namespace>/go2</namespace>
+        </ros>
+        <camera_name>camera/depth</camera_name>
+        <frame_name>camera_depth_optical_frame</frame_name>
+        <min_depth>0.05</min_depth>
+        <max_depth>8.0</max_depth>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>

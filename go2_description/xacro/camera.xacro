@@ -116,7 +116,7 @@
           <stddev>0.01</stddev>
         </noise>
       </camera>
-      <plugin name="go2_depth_controller" filename="libgazebo_ros_camera.so">
+      <plugin name="go2_depth_controller" filename="libgazebo_ros_openni_kinect.so">
         <ros>
           <namespace>/go2</namespace>
         </ros>
