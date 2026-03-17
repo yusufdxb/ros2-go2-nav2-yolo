@@ -1,0 +1,3 @@
+#!/usr/bin/env python3
+from go2_yolo_navigator.navigator_node import main
+main()

@@ -63,8 +63,11 @@
   </joint>
 
   <!-- ══════════════════════════════════════════════════════
-       Gazebo RGB Camera Plugin (ROS 2 style)
+       Gazebo RGB + Depth Camera Plugins — single gazebo block
+       (two separate <gazebo reference="camera_link"> blocks cause
+        a boost::shared_ptr<Scene> assertion crash in Gazebo 11)
        Topics: /go2/camera/image_raw, /go2/camera/camera_info
+               /go2/camera/depth/image_raw, /go2/camera/depth/camera_info
        ══════════════════════════════════════════════════════ -->
   <gazebo reference="camera_link">
     <sensor type="camera" name="go2_rgb_camera">
@@ -94,14 +97,6 @@
         <frame_name>camera_color_optical_frame</frame_name>
       </plugin>
     </sensor>
-  </gazebo>
-
-  <!-- ══════════════════════════════════════════════════════
-       Gazebo Depth Camera Plugin (ROS 2 style)
-       Topics: /go2/camera/depth/image_raw, /go2/camera/depth/camera_info,
-               /go2/camera/depth/points
-       ══════════════════════════════════════════════════════ -->
-  <gazebo reference="camera_link">
     <sensor type="depth" name="go2_depth_camera">
       <update_rate>15</update_rate>
       <camera name="go2_depth">
