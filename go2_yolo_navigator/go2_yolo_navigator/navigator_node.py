@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
 """
 GO2 Nav2 YOLO Demo — Navigator Node
-Identical logic to the TurtleBot3 version.
-Key difference: uses base_footprint (published by CHAMP) not base_link.
-TF chain: camera_color_optical_frame → base_footprint → odom → map
+Key difference from TurtleBot3 version: uses base_footprint (published by CHAMP).
+TF chain: camera_color_optical_frame → trunk → base_link → base_footprint → odom → map
+
+Fixes applied:
+  - yaw computed from robot position → object (not map origin → object)
+  - TF timeout increased to 1.0s to survive SLAM startup latency
+  - Nav2 server wait increased to 10.0s with retry on next detection
 """
 
 import math
 import rclpy
+import rclpy.time
 from rclpy.node import Node
 from rclpy.action import ActionClient
 from rclpy.duration import Duration
@@ -86,14 +91,28 @@ class NavigatorNode(Node):
 
         try:
             map_pose = self.tf_buffer.transform(
-                cam_pose, "map", timeout=Duration(seconds=0.3)
+                cam_pose, "map", timeout=Duration(seconds=1.0)
             )
         except Exception as e:
             self.get_logger().warn(f"TF transform to map failed: {e}")
             return
 
-        # Approach offset
-        yaw = math.atan2(map_pose.pose.position.y, map_pose.pose.position.x)
+        # Get robot's current position in map frame for correct yaw calculation
+        try:
+            robot_tf = self.tf_buffer.lookup_transform(
+                "map", "base_footprint", rclpy.time.Time(), timeout=Duration(seconds=1.0)
+            )
+            robot_x = robot_tf.transform.translation.x
+            robot_y = robot_tf.transform.translation.y
+        except Exception as e:
+            self.get_logger().warn(f"TF lookup for robot pose failed: {e}")
+            return
+
+        # Approach offset: yaw from robot → object (not map origin → object)
+        yaw = math.atan2(
+            map_pose.pose.position.y - robot_y,
+            map_pose.pose.position.x - robot_x,
+        )
         map_pose.pose.position.x -= self.goal_offset * math.cos(yaw)
         map_pose.pose.position.y -= self.goal_offset * math.sin(yaw)
         map_pose.pose.orientation.z = math.sin(yaw / 2.0)
@@ -110,8 +129,9 @@ class NavigatorNode(Node):
         self._send_nav_goal(map_pose)
 
     def _send_nav_goal(self, pose: PoseStamped):
-        if not self.nav_client.wait_for_server(timeout_sec=2.0):
-            self.get_logger().warn("Nav2 not available yet")
+        if not self.nav_client.wait_for_server(timeout_sec=10.0):
+            self.get_logger().warn("Nav2 not available yet — will retry on next detection")
+            self.nav_active = False
             return
 
         goal = NavigateToPose.Goal()
