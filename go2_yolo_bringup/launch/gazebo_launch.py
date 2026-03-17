@@ -51,9 +51,6 @@ def generate_launch_description():
     # champ_description/description.launch.py) with description_path set to
     # go2_robot.xacro below. Running a second RSP here causes competing TF
     # publications for base_link which breaks SLAM toolbox's transform cache.
-    # gui:=false runs gzserver only (no gzclient window).
-    # gzclient crashes on some machines due to GPU/OpenGL init ordering.
-    # RViz (launched by navigation_launch.py) provides visualisation instead.
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             PathJoinSubstitution([
@@ -63,7 +60,6 @@ def generate_launch_description():
         launch_arguments={
             "world": world_file,
             "verbose": "false",
-            "gui": "false",
         }.items(),
     )
 
