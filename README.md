@@ -16,9 +16,6 @@ and its legged locomotion stack.
 
 ## Demo
 
-> *Record your Gazebo sim and add a GIF here — the GO2 walking toward a detected person
-> is the money shot. Use `kazam` or `peek` for screen capture on Ubuntu.*
-
 ---
 
 ## What It Does
