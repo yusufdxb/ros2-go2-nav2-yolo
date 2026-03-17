@@ -49,12 +49,6 @@ bt_navigator:
       - nav2_goal_checker_selector_bt_node
       - nav2_controller_selector_bt_node
       - nav2_path_longer_on_approach_bt_node
-      - nav2_cancel_control_action_bt_node
-      - nav2_cancel_back_up_action_bt_node
-      - nav2_cancel_spin_action_bt_node
-      - nav2_cancel_wait_action_bt_node
-      - nav2_cancel_drive_on_heading_bt_node
-      - nav2_cancel_assisted_teleop_action_bt_node
 
 bt_navigator_navigate_through_poses_rclcpp_node:
   ros__parameters:
