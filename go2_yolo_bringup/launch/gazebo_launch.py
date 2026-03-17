@@ -16,6 +16,7 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import (
     DeclareLaunchArgument,
+    ExecuteProcess,
     IncludeLaunchDescription,
     RegisterEventHandler,
     TimerAction,
@@ -60,6 +61,7 @@ def generate_launch_description():
         launch_arguments={
             "world": world_file,
             "verbose": "false",
+            "gui": "false",
         }.items(),
     )
 
@@ -141,6 +143,25 @@ def generate_launch_description():
         )
     )
 
+    # ── gzclient — delayed 15s to avoid race condition with gzserver scene init ─
+    # LIBGL_ALWAYS_SOFTWARE=1 required; hardware GPU causes assertion crash.
+    # DRI_PRIME=0 = AMD Radeon (DRI_PRIME=1 = Intel UHD 630 on this machine).
+    gzclient = TimerAction(
+        period=15.0,
+        actions=[
+            ExecuteProcess(
+                cmd=["gzclient", "--gui-client-plugin=libgazebo_ros_eol_gui.so"],
+                additional_env={
+                    "DISPLAY": ":1",
+                    "DRI_PRIME": "0",
+                    "LIBGL_ALWAYS_SOFTWARE": "1",
+                    "OGRE_RTT_MODE": "Copy",
+                },
+                output="screen",
+            )
+        ],
+    )
+
     # Delay spawn by 5s to allow Gazebo's rendering scene to fully initialize
     # before camera sensor plugins are loaded (prevents boost::shared_ptr<Scene>
     # assertion crash in Gazebo 11).
@@ -151,6 +172,7 @@ def generate_launch_description():
         declare_world,
         gazebo,
         champ_bringup,
+        gzclient,
         delayed_spawn,
         delay_jsb,
         delay_jec,
