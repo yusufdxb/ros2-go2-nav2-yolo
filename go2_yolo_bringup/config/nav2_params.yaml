@@ -1,4 +1,4 @@
-# Nav2 Parameters — GO2 Quadruped
+# Nav2 Parameters — GO2 Quadruped (ROS 2 Humble / Nav2 1.1.x)
 # Key differences from wheeled robot config:
 #   - base_frame_id: base_footprint (published by CHAMP state estimation)
 #   - robot_radius: 0.35 (GO2 shoulder width ~0.31m + clearance)
@@ -9,51 +9,89 @@ bt_navigator:
   ros__parameters:
     use_sim_time: true
     global_frame: map
-    robot_base_frame: base_footprint    # CHAMP publishes this frame
+    robot_base_frame: base_footprint
     odom_topic: /odom
     bt_loop_duration: 10
     default_server_timeout: 20
+    wait_for_service_timeout: 1000
     plugin_lib_names:
       - nav2_compute_path_to_pose_action_bt_node
+      - nav2_compute_path_through_poses_action_bt_node
+      - nav2_smooth_path_action_bt_node
       - nav2_follow_path_action_bt_node
-      - nav2_back_up_action_bt_node
       - nav2_spin_action_bt_node
       - nav2_wait_action_bt_node
+      - nav2_assisted_teleop_action_bt_node
+      - nav2_back_up_action_bt_node
+      - nav2_drive_on_heading_bt_node
       - nav2_clear_costmap_service_bt_node
       - nav2_is_stuck_condition_bt_node
       - nav2_goal_reached_condition_bt_node
       - nav2_goal_updated_condition_bt_node
+      - nav2_globally_updated_goal_condition_bt_node
+      - nav2_is_path_valid_condition_bt_node
+      - nav2_initial_pose_received_condition_bt_node
+      - nav2_reinitialize_global_localization_service_bt_node
+      - nav2_rate_controller_bt_node
+      - nav2_distance_controller_bt_node
+      - nav2_speed_controller_bt_node
+      - nav2_truncate_path_action_bt_node
+      - nav2_truncate_path_local_action_bt_node
+      - nav2_goal_updater_node_bt_node
       - nav2_recovery_node_bt_node
       - nav2_pipeline_sequence_bt_node
       - nav2_round_robin_node_bt_node
+      - nav2_transform_available_condition_bt_node
+      - nav2_time_expired_condition_bt_node
+      - nav2_path_expiring_timer_condition
+      - nav2_distance_traveled_condition_bt_node
+      - nav2_single_trigger_bt_node
+      - nav2_goal_checker_selector_bt_node
+      - nav2_controller_selector_bt_node
+      - nav2_path_longer_on_approach_bt_node
+      - nav2_cancel_control_action_bt_node
+      - nav2_cancel_back_up_action_bt_node
+      - nav2_cancel_spin_action_bt_node
+      - nav2_cancel_wait_action_bt_node
+      - nav2_cancel_drive_on_heading_bt_node
+      - nav2_cancel_assisted_teleop_action_bt_node
+
+bt_navigator_navigate_through_poses_rclcpp_node:
+  ros__parameters:
+    use_sim_time: true
+
+bt_navigator_navigate_to_pose_rclcpp_node:
+  ros__parameters:
+    use_sim_time: true
 
 controller_server:
   ros__parameters:
     use_sim_time: true
-    controller_frequency: 10.0         # Lower than wheeled — quadruped is slower
+    controller_frequency: 10.0
     min_x_velocity_threshold: 0.001
     min_y_velocity_threshold: 0.5
     min_theta_velocity_threshold: 0.001
+    failure_tolerance: 0.3
     progress_checker_plugin: "progress_checker"
-    goal_checker_plugin: "goal_checker"
+    goal_checker_plugins: ["general_goal_checker"]
     controller_plugins: ["FollowPath"]
 
     progress_checker:
       plugin: "nav2_controller::SimpleProgressChecker"
       required_movement_radius: 0.5
-      movement_time_allowance: 20.0    # More time — quadruped slower
+      movement_time_allowance: 20.0
 
-    goal_checker:
+    general_goal_checker:
+      stateful: true
       plugin: "nav2_controller::SimpleGoalChecker"
       xy_goal_tolerance: 0.5
       yaw_goal_tolerance: 0.5
-      stateful: true
 
     FollowPath:
       plugin: "dwb_core::DWBLocalPlanner"
       min_vel_x: 0.0
       min_vel_y: 0.0
-      max_vel_x: 0.4           # Quadruped safe speed in sim
+      max_vel_x: 0.4
       max_vel_y: 0.0
       max_vel_theta: 0.8
       min_speed_xy: 0.0
@@ -73,6 +111,7 @@ controller_server:
       angular_granularity: 0.025
       trans_stopped_velocity: 0.25
       short_circuit_trajectory_evaluation: true
+      stateful: true
       critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
       BaseObstacle.scale: 0.02
       PathAlign.scale: 32.0
@@ -95,46 +134,66 @@ planner_server:
       use_astar: true
       allow_unknown: true
 
-amcl:
+smoother_server:
   ros__parameters:
     use_sim_time: true
-    alpha1: 0.2
-    alpha2: 0.2
-    alpha3: 0.2
-    alpha4: 0.2
-    alpha5: 0.2
-    base_frame_id: base_footprint
-    beam_skip_distance: 0.5
-    beam_skip_error_threshold: 0.9
-    beam_skip_threshold: 0.3
-    do_beamskip: false
-    global_frame_id: map
-    lambda_short: 0.1
-    laser_likelihood_max_dist: 2.0
-    laser_max_range: 8.0
-    laser_min_range: -1.0
-    laser_model_type: likelihood_field
-    max_beams: 60
-    max_particles: 2000
-    min_particles: 500
-    odom_frame_id: odom
-    pf_err: 0.05
-    pf_z: 0.99
-    recovery_alpha_fast: 0.0
-    recovery_alpha_slow: 0.0
-    resample_interval: 1
-    robot_model_type: nav2_amcl::DifferentialMotionModel
-    save_pose_rate: 0.5
-    sigma_hit: 0.2
-    tf_broadcast: true
-    transform_tolerance: 1.0
-    update_min_a: 0.2
-    update_min_d: 0.25
-    z_hit: 0.5
-    z_max: 0.05
-    z_rand: 0.5
-    z_short: 0.05
-    scan_topic: scan
+    smoother_plugins: ["simple_smoother"]
+    simple_smoother:
+      plugin: "nav2_smoother::SimpleSmoother"
+      tolerance: 1.0e-10
+      max_its: 1000
+      do_refinement: true
+
+behavior_server:
+  ros__parameters:
+    use_sim_time: true
+    costmap_topic: local_costmap/costmap_raw
+    footprint_topic: local_costmap/published_footprint
+    cycle_frequency: 10.0
+    behavior_plugins: ["spin", "backup", "drive_on_heading", "assisted_teleop", "wait"]
+    spin:
+      plugin: "nav2_behaviors/Spin"
+    backup:
+      plugin: "nav2_behaviors/BackUp"
+    drive_on_heading:
+      plugin: "nav2_behaviors/DriveOnHeading"
+    wait:
+      plugin: "nav2_behaviors/Wait"
+    assisted_teleop:
+      plugin: "nav2_behaviors/AssistedTeleop"
+    global_frame: odom
+    robot_base_frame: base_footprint
+    transform_timeout: 0.1
+    simulate_ahead_time: 2.0
+    max_rotational_vel: 0.8
+    min_rotational_vel: 0.3
+    rotational_acc_lim: 2.0
+
+waypoint_follower:
+  ros__parameters:
+    use_sim_time: true
+    loop_rate: 20
+    stop_on_failure: false
+    waypoint_task_executor_plugin: "wait_at_waypoint"
+    wait_at_waypoint:
+      plugin: "nav2_waypoint_follower::WaitAtWaypoint"
+      enabled: true
+      waypoint_pause_duration: 200
+
+velocity_smoother:
+  ros__parameters:
+    use_sim_time: true
+    smoothing_frequency: 20.0
+    scale_velocities: false
+    feedback: "OPEN_LOOP"
+    max_velocity: [0.4, 0.0, 0.8]
+    min_velocity: [-0.4, 0.0, -0.8]
+    max_accel: [1.0, 0.0, 2.0]
+    max_decel: [-1.5, 0.0, -2.5]
+    odom_topic: "odom"
+    odom_duration: 0.1
+    deadband_velocity: [0.0, 0.0, 0.0]
+    velocity_timeout: 1.0
 
 local_costmap:
   local_costmap:
@@ -148,7 +207,7 @@ local_costmap:
       width: 4
       height: 4
       resolution: 0.05
-      robot_radius: 0.35           # GO2 width ~0.31m + clearance
+      robot_radius: 0.35
       plugins: ["voxel_layer", "inflation_layer"]
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
@@ -167,11 +226,14 @@ local_costmap:
           marking: true
           data_type: "LaserScan"
           raytrace_max_range: 4.0
+          raytrace_min_range: 0.0
           obstacle_max_range: 3.5
+          obstacle_min_range: 0.0
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
         inflation_radius: 0.60
+      always_send_full_costmap: true
 
 global_costmap:
   global_costmap:
@@ -199,29 +261,24 @@ global_costmap:
           marking: true
           data_type: "LaserScan"
           raytrace_max_range: 4.0
+          raytrace_min_range: 0.0
           obstacle_max_range: 3.5
+          obstacle_min_range: 0.0
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
         inflation_radius: 0.60
+      always_send_full_costmap: true
 
-recoveries_server:
+map_server:
   ros__parameters:
     use_sim_time: true
-    costmap_topic: local_costmap/costmap_raw
-    footprint_topic: local_costmap/published_footprint
-    cycle_frequency: 10.0
-    recovery_plugins: ["spin", "back_up", "wait"]
-    spin:
-      plugin: "nav2_recoveries/Spin"
-    back_up:
-      plugin: "nav2_recoveries/BackUp"
-    wait:
-      plugin: "nav2_recoveries/Wait"
-    global_frame: odom
-    robot_base_frame: base_footprint
-    transform_timeout: 0.1
-    simulate_ahead_time: 2.0
-    max_rotational_vel: 0.8
-    min_rotational_vel: 0.3
-    rotational_acc_lim: 2.0
+    yaml_filename: ""
+
+map_saver:
+  ros__parameters:
+    use_sim_time: true
+    save_map_timeout: 5.0
+    free_thresh_default: 0.25
+    occupied_thresh_default: 0.65
+    map_subscribe_transient_local: true

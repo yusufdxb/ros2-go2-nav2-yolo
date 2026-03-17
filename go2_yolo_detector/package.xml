@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>go2_yolo_detector</name>
+  <version>0.1.0</version>
+  <description>YOLOv8 detector node for GO2 Nav2 YOLO demo</description>
+  <maintainer email="user@todo.todo">user</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <depend>rclpy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>cv_bridge</depend>
+  <depend>go2_yolo_msgs</depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

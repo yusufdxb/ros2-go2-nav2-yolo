@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>go2_yolo_navigator</name>
+  <version>0.1.0</version>
+  <description>Nav2 navigator node for GO2 Nav2 YOLO demo</description>
+  <maintainer email="user@todo.todo">user</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <depend>rclpy</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav2_msgs</depend>
+  <depend>tf2_ros</depend>
+  <depend>tf2_geometry_msgs</depend>
+  <depend>go2_yolo_msgs</depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
