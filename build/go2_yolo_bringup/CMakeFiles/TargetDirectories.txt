@@ -1,9 +1,0 @@
-/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup/CMakeFiles/uninstall.dir
-/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup/CMakeFiles/go2_yolo_bringup_uninstall.dir
-/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup/CMakeFiles/test.dir
-/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup/CMakeFiles/edit_cache.dir
-/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup/CMakeFiles/rebuild_cache.dir
-/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup/CMakeFiles/list_install_components.dir
-/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup/CMakeFiles/install.dir
-/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup/CMakeFiles/install/local.dir
-/home/carebear/go2_yolo_ws/src/ros2-go2-nav2-yolo/build/go2_yolo_bringup/CMakeFiles/install/strip.dir
