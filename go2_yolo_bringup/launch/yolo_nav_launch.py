@@ -25,22 +25,17 @@ def generate_launch_description():
     )
     declare_sim_time = DeclareLaunchArgument("use_sim_time", default_value="true")
 
+    # Simulation: use Gazebo ground truth instead of YOLO (llvmpipe rendering
+    # is too synthetic for YOLOv8 to detect the person_standing model).
+    # For real hardware, swap this node back to detector_node with YOLO.
     detector = Node(
         package="go2_yolo_detector",
-        executable="detector_node",
-        name="detector_node",
+        executable="sim_person_detector",
+        name="sim_person_detector",
         parameters=[
-            {"model_path": "yolov8n.pt"},
-            {"confidence_threshold": 0.01},
-            {"max_depth_m": 10.0},
-            {"publish_visualization": True},
+            {"model_name": "person_standing"},
+            {"confidence": 1.0},
             {"use_sim_time": use_sim_time},
-        ],
-        # Remap to the GO2's Gazebo camera topics
-        remappings=[
-            ("/camera/image_raw",       "/go2/camera/image_raw"),
-            ("/camera/depth/image_raw", "/go2/camera/depth/image_raw"),
-            ("/camera/camera_info",     "/go2/camera/camera_info"),
         ],
         output="screen",
     )
@@ -51,7 +46,7 @@ def generate_launch_description():
         name="navigator_node",
         parameters=[
             {"target_class": target_class},
-            {"min_confidence": 0.01},
+            {"min_confidence": 0.5},
             {"goal_offset_m": 0.8},
             {"replan_distance_m": 0.4},
             {"use_sim_time": use_sim_time},

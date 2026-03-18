@@ -16,6 +16,7 @@ setup(
     entry_points={
         'console_scripts': [
             'detector_node = go2_yolo_detector.detector_node:main',
+            'sim_person_detector = go2_yolo_detector.sim_person_detector:main',
         ],
     },
 )
