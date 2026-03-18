@@ -31,7 +31,7 @@ def generate_launch_description():
         name="detector_node",
         parameters=[
             {"model_path": "yolov8n.pt"},
-            {"confidence_threshold": 0.45},
+            {"confidence_threshold": 0.01},
             {"max_depth_m": 10.0},
             {"publish_visualization": True},
             {"use_sim_time": use_sim_time},
@@ -51,7 +51,7 @@ def generate_launch_description():
         name="navigator_node",
         parameters=[
             {"target_class": target_class},
-            {"min_confidence": 0.5},
+            {"min_confidence": 0.01},
             {"goal_offset_m": 0.8},
             {"replan_distance_m": 0.4},
             {"use_sim_time": use_sim_time},
