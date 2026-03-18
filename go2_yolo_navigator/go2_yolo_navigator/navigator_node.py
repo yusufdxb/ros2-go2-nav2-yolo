@@ -48,6 +48,8 @@ class NavigatorNode(Node):
         self.current_goal_pose = None
         self.nav_active = False
         self._goal_handle = None
+        self._last_goal_time = 0.0
+        self._goal_cooldown_s = 5.0  # min seconds between goal sends
 
         self.detections_sub = self.create_subscription(
             DetectedObjectArray, "/detected_objects", self.detections_callback, 10
@@ -118,6 +120,10 @@ class NavigatorNode(Node):
         map_pose.pose.orientation.z = math.sin(yaw / 2.0)
         map_pose.pose.orientation.w = math.cos(yaw / 2.0)
 
+        now = self.get_clock().now().nanoseconds / 1e9
+        if now - self._last_goal_time < self._goal_cooldown_s:
+            return
+
         if self.current_goal_pose is not None and self.nav_active:
             dx = map_pose.pose.position.x - self.current_goal_pose.pose.position.x
             dy = map_pose.pose.position.y - self.current_goal_pose.pose.position.y
@@ -146,6 +152,7 @@ class NavigatorNode(Node):
         future = self.nav_client.send_goal_async(goal, feedback_callback=self._feedback_cb)
         future.add_done_callback(self._goal_accepted_cb)
         self.nav_active = True
+        self._last_goal_time = self.get_clock().now().nanoseconds / 1e9
 
     def _goal_accepted_cb(self, future):
         self._goal_handle = future.result()
