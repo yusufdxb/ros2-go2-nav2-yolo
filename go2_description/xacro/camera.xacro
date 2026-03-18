@@ -62,11 +62,39 @@
     <origin xyz="0 0 0" rpy="-1.5708 0 -1.5708"/>
   </joint>
 
-  <!-- Camera Gazebo sensor plugins are defined in the world file (demo_world.world)
-       as a standalone model attached to the robot via a joint, not in the URDF.
-       Embedding sensor plugins in the URDF causes gzserver to crash in headless
-       mode because libgazebo_ros_camera.so requires a rendering scene that is
-       not initialised until gzclient connects. The links/joints above are kept
-       so the TF tree is complete for the navigator node. -->
+  <!-- Depth camera sensor — requires LIBGL_DRI3_DISABLE=1 passed to gzserver
+       via SetEnvironmentVariable in gazebo_launch.py for OGRE to init correctly. -->
+  <gazebo reference="camera_link">
+    <sensor type="depth" name="go2_camera">
+      <always_on>true</always_on>
+      <update_rate>15</update_rate>
+      <visualize>false</visualize>
+      <camera>
+        <horizontal_fov>1.047</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.1</near>
+          <far>8.0</far>
+        </clip>
+      </camera>
+      <plugin name="go2_camera_plugin" filename="libgazebo_ros_camera.so">
+        <ros>
+          <namespace>/go2</namespace>
+          <remapping>image_raw:=camera/image_raw</remapping>
+          <remapping>image_depth:=camera/depth/image_raw</remapping>
+          <remapping>camera_info:=camera/camera_info</remapping>
+          <remapping>depth_camera_info:=camera/depth/camera_info</remapping>
+        </ros>
+        <camera_name>camera</camera_name>
+        <frame_name>camera_color_optical_frame</frame_name>
+        <min_depth>0.1</min_depth>
+        <max_depth>8.0</max_depth>
+      </plugin>
+    </sensor>
+  </gazebo>
 
 </robot>

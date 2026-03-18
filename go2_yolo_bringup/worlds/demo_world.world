@@ -677,6 +677,12 @@
         <pose>0 0 10 0 -0 0</pose>
       </light>
     </state>
+    <include>
+      <uri>model://person_standing</uri>
+      <name>person_standing</name>
+      <pose>2.0 0.0 0.0 0 0 0</pose>
+    </include>
+
     <gui fullscreen='0'>
       <camera name='user_camera'>
         <pose>10.1126 -10.4027 4.20251 0 0.275643 2.35619</pose>

@@ -121,11 +121,12 @@ class DetectorNode(Node):
             ry1 = max(0, cy_bb - roi_h // 2); ry2 = min(depth.shape[0], cy_bb + roi_h // 2)
 
             roi_depth = depth[ry1:ry2, rx1:rx2].astype(np.float32)
-            valid = roi_depth[(roi_depth > 0) & (roi_depth < self.max_depth * 1000)]
+            # Gazebo libgazebo_ros_camera.so publishes depth as 32FC1 in metres
+            valid = roi_depth[(roi_depth > 0) & (roi_depth < self.max_depth)]
             if valid.size == 0:
                 continue
 
-            depth_m = float(np.median(valid)) / 1000.0
+            depth_m = float(np.median(valid))
             X = (cx_bb - self.cx) * depth_m / self.fx
             Y = (cy_bb - self.cy) * depth_m / self.fy
             Z = depth_m

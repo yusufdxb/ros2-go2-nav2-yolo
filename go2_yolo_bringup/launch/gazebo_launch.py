@@ -52,18 +52,45 @@ def generate_launch_description():
     # champ_description/description.launch.py) with description_path set to
     # go2_robot.xacro below. Running a second RSP here causes competing TF
     # publications for base_link which breaks SLAM toolbox's transform cache.
-    gazebo = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([
-            PathJoinSubstitution([
-                FindPackageShare("gazebo_ros"), "launch", "gazebo.launch.py"
-            ])
-        ]),
-        launch_arguments={
-            "world": world_file,
-            "verbose": "false",
-            "gui": "false",
-        }.items(),
+    #
+    # gzserver launched via ExecuteProcess (not IncludeLaunchDescription) so
+    # we can inject LIBGL_DRI3_DISABLE=1 directly — SetEnvironmentVariable and
+    # IncludeLaunchDescription do not reliably propagate env to child processes.
+    # LIBGL_DRI3_DISABLE=1 is required for the depth camera sensor (OGRE init).
+    world_file_path = os.path.join(go2_yolo_share, "worlds", "demo_world.world")
+
+    gzserver = ExecuteProcess(
+        cmd=[
+            "gzserver",
+            world_file_path,
+            "-slibgazebo_ros_init.so",
+            "-slibgazebo_ros_factory.so",
+            "-slibgazebo_ros_force_system.so",
+        ],
+        additional_env={
+            "LIBGL_ALWAYS_SOFTWARE": "1",
+            "LIBGL_DRI3_DISABLE": "1",
+            "OGRE_RTT_MODE": "Copy",
+            "DISPLAY": ":1",
+        },
+        output="screen",
     )
+
+    # Launch gzclient directly as a process so we can inject env vars.
+    # IncludeLaunchDescription does not propagate SetEnvironmentVariable to child
+    # processes reliably — ExecuteProcess with explicit env dict does.
+    gzclient = ExecuteProcess(
+        cmd=["gzclient", "--gui-client-plugin=libgazebo_ros_eol_gui.so"],
+        additional_env={
+            "LIBGL_ALWAYS_SOFTWARE": "1",
+            "LIBGL_DRI3_DISABLE": "1",   # prevents rendering::Camera crash with llvmpipe
+            "OGRE_RTT_MODE": "Copy",
+            "DISPLAY": ":1",
+        },
+        output="screen",
+    )
+
+    delayed_gzclient = TimerAction(period=6.0, actions=[gzclient])
 
     # ── Spawn GO2 ─────────────────────────────────────────────────────────
     spawn_robot = Node(
@@ -143,36 +170,17 @@ def generate_launch_description():
         )
     )
 
-    # ── gzclient — delayed 15s to avoid race condition with gzserver scene init ─
-    # LIBGL_ALWAYS_SOFTWARE=1 required; hardware GPU causes assertion crash.
-    # DRI_PRIME=0 = AMD Radeon (DRI_PRIME=1 = Intel UHD 630 on this machine).
-    gzclient = TimerAction(
-        period=15.0,
-        actions=[
-            ExecuteProcess(
-                cmd=["gzclient", "--gui-client-plugin=libgazebo_ros_eol_gui.so"],
-                additional_env={
-                    "DISPLAY": ":1",
-                    "DRI_PRIME": "0",
-                    "LIBGL_ALWAYS_SOFTWARE": "1",
-                    "OGRE_RTT_MODE": "Copy",
-                },
-                output="screen",
-            )
-        ],
-    )
-
-    # Delay spawn by 5s to allow Gazebo's rendering scene to fully initialize
-    # before camera sensor plugins are loaded (prevents boost::shared_ptr<Scene>
-    # assertion crash in Gazebo 11).
-    delayed_spawn = TimerAction(period=5.0, actions=[spawn_robot])
+    # Delay spawn 10s to allow gzserver+gzclient rendering scene to fully init.
+    # gui:=true starts gzclient automatically; LIBGL_ALWAYS_SOFTWARE=1 and
+    # OGRE_RTT_MODE=Copy (from go2_sim_env.sh) prevent the GPU assertion crash.
+    delayed_spawn = TimerAction(period=10.0, actions=[spawn_robot])
 
     return LaunchDescription([
         declare_sim_time,
         declare_world,
-        gazebo,
+        gzserver,
+        delayed_gzclient,
         champ_bringup,
-        gzclient,
         delayed_spawn,
         delay_jsb,
         delay_jec,
