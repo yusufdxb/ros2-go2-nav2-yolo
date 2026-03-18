@@ -9,7 +9,7 @@ setup(
     data_files=[
         ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('lib/' + package_name, ['scripts/detector_node']),
+        ('lib/' + package_name, ['scripts/detector_node', 'scripts/sim_person_detector']),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

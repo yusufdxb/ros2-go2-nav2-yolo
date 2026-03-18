@@ -66,6 +66,7 @@ def generate_launch_description():
             "-slibgazebo_ros_init.so",
             "-slibgazebo_ros_factory.so",
             "-slibgazebo_ros_force_system.so",
+            "-slibgazebo_ros_state.so",
         ],
         additional_env={
             "LIBGL_ALWAYS_SOFTWARE": "1",

@@ -2,19 +2,22 @@
 """
 sim_person_detector.py — Gazebo ground truth person detector for simulation.
 
-Reads the person_standing model's world position from /gazebo/model_states
-and publishes it as a DetectedObjectArray in the map frame.
+Publishes the person_standing model's fixed world position as a
+DetectedObjectArray in the map frame at 2 Hz.
+
+The person_standing model is placed at (2, 0, 0) in demo_world.world and
+does not move, so polling /gazebo/model_states is unnecessary. This timer-
+based approach avoids a dependency on the gazebo_ros_state plugin.
 
 Replaces the YOLOv8 detector for simulation where software rendering
 (llvmpipe) produces images too synthetic for YOLO to detect. The navigator
 node is unaware of the switch — it receives the same DetectedObjectArray
-message type and TFs the position from map frame to map frame (identity).
+message type.
 """
 
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Header
-from gazebo_msgs.msg import ModelStates
 from go2_yolo_msgs.msg import DetectedObject, DetectedObjectArray
 
 
@@ -22,44 +25,37 @@ class SimPersonDetector(Node):
     def __init__(self):
         super().__init__("sim_person_detector")
 
-        self.declare_parameter("model_name", "person_standing")
+        self.declare_parameter("person_x", 2.0)
+        self.declare_parameter("person_y", 0.0)
+        self.declare_parameter("person_z", 0.0)
         self.declare_parameter("confidence", 1.0)
 
-        self.model_name = self.get_parameter("model_name").value
+        self.person_x = float(self.get_parameter("person_x").value)
+        self.person_y = float(self.get_parameter("person_y").value)
+        self.person_z = float(self.get_parameter("person_z").value)
         self.confidence = float(self.get_parameter("confidence").value)
 
         self.pub = self.create_publisher(DetectedObjectArray, "/detected_objects", 10)
-        self.sub = self.create_subscription(
-            ModelStates,
-            "/gazebo/model_states",
-            self.model_states_cb,
-            10,
-        )
+        self.create_timer(0.5, self.publish_detection)  # 2 Hz
 
         self.get_logger().info(
-            f"SimPersonDetector ready. Tracking Gazebo model: '{self.model_name}'"
+            f"SimPersonDetector ready. Publishing person at "
+            f"({self.person_x}, {self.person_y}, {self.person_z})"
         )
 
-    def model_states_cb(self, msg: ModelStates):
-        if self.model_name not in msg.name:
-            return
-
-        idx = msg.name.index(self.model_name)
-        pose = msg.pose[idx]
-
+    def publish_detection(self):
         obj = DetectedObject()
         obj.class_name = "person"
         obj.class_id = 0        # COCO person class ID
         obj.confidence = self.confidence
-        obj.position.x = pose.position.x
-        obj.position.y = pose.position.y
-        obj.position.z = pose.position.z
-        # bbox fields unused by navigator — leave as zero
+        obj.position.x = self.person_x
+        obj.position.y = self.person_y
+        obj.position.z = self.person_z
 
         out = DetectedObjectArray()
         out.header = Header()
         out.header.stamp = self.get_clock().now().to_msg()
-        out.header.frame_id = "map"   # navigator TFs this to map (identity)
+        out.header.frame_id = "map"
         out.objects = [obj]
 
         self.pub.publish(out)
