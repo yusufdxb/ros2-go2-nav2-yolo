@@ -54,14 +54,10 @@ class ScanRelay(Node):
                 )
             return
 
-        # Stamp to (now - 0.5s): safely behind the leading edge of the TF buffer
-        # so tf2 interpolates rather than extrapolates.  0.5s is well within
-        # both SLAM's 60s buffer and costmap's 10s default buffer, but large
-        # enough to clear the startup window before TF data arrives.
-        stamp_ns = now_ns - int(0.5e9)
-        msg.header.stamp.sec = stamp_ns // 10**9
-        msg.header.stamp.nanosec = stamp_ns % 10**9
-
+        # Forward with original Gazebo timestamp — it is already current sim_time.
+        # Re-stamping is not needed: SLAM starts after a 10s delay so TF is
+        # established before SLAM subscribes, and the costmap needs a timestamp
+        # that falls within its TF buffer (re-stamping to now-0.5s caused drops).
         self.pub.publish(msg)
 
 
