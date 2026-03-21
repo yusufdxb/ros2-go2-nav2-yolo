@@ -1,0 +1,46 @@
+---
+# detector_params.yaml
+# ROS2 parameters for the GO2 custom perception detector node.
+# Loaded by real_robot_launch.py.
+# All values can be overridden on the command line:
+#   ros2 launch go2_yolo_bringup real_robot_launch.py confidence_threshold:=0.55
+
+detector_node:
+  ros__parameters:
+
+    # ── Model ────────────────────────────────────────────────────────────────
+    # Path to trained weights (.pt / .torchscript / .onnx / .engine)
+    # Symlink ~/models/go2_perception/best.pt is maintained by train.sh
+    model_path: "/home/carebear/models/go2_perception/best.pt"
+
+    # ── Inference ─────────────────────────────────────────────────────────────
+    confidence_threshold: 0.50    # raise to 0.60 in cluttered environments
+    half_precision: false          # set true for ~30% FPS gain on RTX; requires .pt
+
+    # ── Depth fusion ──────────────────────────────────────────────────────────
+    max_depth_m: 8.0               # ignore detections beyond this range
+    depth_sample_fraction: 0.30    # fraction of bbox width/height for depth ROI
+
+    # ── Tracker ───────────────────────────────────────────────────────────────
+    use_tracker: true
+    tracker_config: "botsort.yaml"  # alternatives: bytetrack.yaml
+
+    # ── Smoothing ─────────────────────────────────────────────────────────────
+    ema_alpha: 0.40                # 0.0 = full smoothing; 1.0 = raw positions
+    min_track_hits: 3              # frames of stability before announcing track
+
+    # ── Target lock ───────────────────────────────────────────────────────────
+    target_class: "owner_person"   # must match a class name in your model
+    lock_conf_threshold: 0.60      # min confidence to initiate lock
+    reacquire_hits: 5              # frames of stable new track before relocking
+    search_timeout_s: 12.0         # SEARCHING → WAITING fallback timeout
+
+    # ── Visualization ─────────────────────────────────────────────────────────
+    publish_visualization: true    # set false to save bandwidth on slow networks
+
+navigator_node:
+  ros__parameters:
+    target_class: "owner_person"   # must match detector's target_class
+    min_confidence: 0.55
+    goal_offset_m: 0.80            # stop this far from the target
+    replan_distance_m: 0.40        # only replan if target moved this far

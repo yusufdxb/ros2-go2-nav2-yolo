@@ -1,0 +1,3 @@
+#!/usr/bin/env python3
+from go2_yolo_detector.multi_agent_sim_detector import main
+main()

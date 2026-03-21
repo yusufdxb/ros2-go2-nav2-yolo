@@ -1,0 +1,303 @@
+<sdf version='1.7'>
+  <world name='advanced_demo'>
+
+    <!-- ── Lighting ──────────────────────────────────────────────────────── -->
+    <light name='sun' type='directional'>
+      <cast_shadows>0</cast_shadows>
+      <pose>0 0 15 0 -0 0</pose>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <specular>0.3 0.3 0.3 1</specular>
+      <attenuation><range>1000</range><constant>0.9</constant><linear>0.01</linear><quadratic>0.001</quadratic></attenuation>
+      <direction>-0.5 0.2 -0.9</direction>
+    </light>
+
+    <!-- ── Ground plane ──────────────────────────────────────────────────── -->
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><plane><normal>0 0 1</normal><size>200 200</size></plane></geometry>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry><plane><normal>0 0 1</normal><size>200 200</size></plane></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Bricks</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ── Physics ───────────────────────────────────────────────────────── -->
+    <gravity>0 0 -9.8</gravity>
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.45 0.45 0.45 1</ambient>
+      <background>0.6 0.7 0.8 1</background>
+      <shadows>0</shadows>
+    </scene>
+
+    <!-- ================================================================= -->
+    <!-- OUTER BOUNDARY WALLS (26m x 20m arena)                            -->
+    <!--   Robot spawns at (0, 0). Persons at corners of interior.         -->
+    <!-- ================================================================= -->
+
+    <model name='wall_south'>
+      <static>1</static>
+      <pose>0 -10 1.25 0 0 0</pose>
+      <link name='link'>
+        <collision name='col'><geometry><box><size>26 0.15 2.5</size></box></geometry></collision>
+        <visual name='vis'><geometry><box><size>26 0.15 2.5</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script><ambient>0.8 0.8 0.8 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='wall_north'>
+      <static>1</static>
+      <pose>0 10 1.25 0 0 0</pose>
+      <link name='link'>
+        <collision name='col'><geometry><box><size>26 0.15 2.5</size></box></geometry></collision>
+        <visual name='vis'><geometry><box><size>26 0.15 2.5</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script><ambient>0.8 0.8 0.8 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='wall_west'>
+      <static>1</static>
+      <pose>-13 0 1.25 0 0 0</pose>
+      <link name='link'>
+        <collision name='col'><geometry><box><size>0.15 20 2.5</size></box></geometry></collision>
+        <visual name='vis'><geometry><box><size>0.15 20 2.5</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script><ambient>0.8 0.8 0.8 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='wall_east'>
+      <static>1</static>
+      <pose>13 0 1.25 0 0 0</pose>
+      <link name='link'>
+        <collision name='col'><geometry><box><size>0.15 20 2.5</size></box></geometry></collision>
+        <visual name='vis'><geometry><box><size>0.15 20 2.5</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script><ambient>0.8 0.8 0.8 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ================================================================= -->
+    <!-- CENTRAL EAST-WEST DIVIDING WALL                                   -->
+    <!--   Two segments at y=2, separated by a 3m corridor gap at x=0      -->
+    <!-- ================================================================= -->
+
+    <model name='wall_ew_west_segment'>
+      <static>1</static>
+      <pose>-7.5 2 1.25 0 0 0</pose>
+      <link name='link'>
+        <collision name='col'><geometry><box><size>11 0.15 2.5</size></box></geometry></collision>
+        <visual name='vis'><geometry><box><size>11 0.15 2.5</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/White</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='wall_ew_east_segment'>
+      <static>1</static>
+      <pose>8.5 2 1.25 0 0 0</pose>
+      <link name='link'>
+        <collision name='col'><geometry><box><size>9 0.15 2.5</size></box></geometry></collision>
+        <visual name='vis'><geometry><box><size>9 0.15 2.5</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/White</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ================================================================= -->
+    <!-- NW ROOM WALLS — creates an enclosed room in the NW zone           -->
+    <!--   Room bounds approx: x in [-13,-7], y in [2,10]                 -->
+    <!-- ================================================================= -->
+
+    <!-- E wall of NW room (partial — leaves doorway at bottom) -->
+    <model name='wall_nw_east'>
+      <static>1</static>
+      <pose>-7 6.5 1.25 0 0 0</pose>
+      <link name='link'>
+        <collision name='col'><geometry><box><size>0.15 7 2.5</size></box></geometry></collision>
+        <visual name='vis'><geometry><box><size>0.15 7 2.5</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Blue</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ================================================================= -->
+    <!-- NE ZONE — partial wall creating an alcove at NE corner            -->
+    <!-- ================================================================= -->
+
+    <model name='wall_ne_south'>
+      <static>1</static>
+      <pose>9.5 5 1.25 0 0 0</pose>
+      <link name='link'>
+        <collision name='col'><geometry><box><size>7 0.15 2.5</size></box></geometry></collision>
+        <visual name='vis'><geometry><box><size>7 0.15 2.5</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Blue</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='wall_ne_west'>
+      <static>1</static>
+      <pose>6 7.5 1.25 0 0 0</pose>
+      <link name='link'>
+        <collision name='col'><geometry><box><size>0.15 5 2.5</size></box></geometry></collision>
+        <visual name='vis'><geometry><box><size>0.15 5 2.5</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Blue</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ================================================================= -->
+    <!-- NARROW CORRIDOR — vertical passage at x=0, y in [-2,2]           -->
+    <!-- ================================================================= -->
+
+    <model name='wall_corridor_west'>
+      <static>1</static>
+      <pose>-1.5 0 1.25 0 0 0</pose>
+      <link name='link'>
+        <collision name='col'><geometry><box><size>0.15 4 2.5</size></box></geometry></collision>
+        <visual name='vis'><geometry><box><size>0.15 4 2.5</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Orange</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='wall_corridor_east'>
+      <static>1</static>
+      <pose>1.5 0 1.25 0 0 0</pose>
+      <link name='link'>
+        <collision name='col'><geometry><box><size>0.15 4 2.5</size></box></geometry></collision>
+        <visual name='vis'><geometry><box><size>0.15 4 2.5</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Orange</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ================================================================= -->
+    <!-- BOX OBSTACLES — scattered throughout the arena                    -->
+    <!--   Size: 1×1×1m cubes (orange) — act as view-blocking pillars     -->
+    <!-- ================================================================= -->
+
+    <model name='box_1'>
+      <static>1</static>
+      <pose>3 5 0.5 0 0 0</pose>
+      <link name='link'>
+        <collision name='col'><geometry><box><size>1 1 1</size></box></geometry></collision>
+        <visual name='vis'><geometry><box><size>1 1 1</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Orange</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='box_2'>
+      <static>1</static>
+      <pose>-3 -4 0.5 0 0 0</pose>
+      <link name='link'>
+        <collision name='col'><geometry><box><size>1 1 1</size></box></geometry></collision>
+        <visual name='vis'><geometry><box><size>1 1 1</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Orange</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='box_3'>
+      <static>1</static>
+      <pose>7 -5 0.5 0 0 0</pose>
+      <link name='link'>
+        <collision name='col'><geometry><box><size>1 1 1</size></box></geometry></collision>
+        <visual name='vis'><geometry><box><size>1 1 1</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Orange</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='box_4'>
+      <static>1</static>
+      <pose>-7 -5 0.5 0 0 0</pose>
+      <link name='link'>
+        <collision name='col'><geometry><box><size>1 1 1</size></box></geometry></collision>
+        <visual name='vis'><geometry><box><size>1 1 1</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Orange</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='box_5'>
+      <static>1</static>
+      <pose>0 -7 0.5 0 0 0</pose>
+      <link name='link'>
+        <collision name='col'><geometry><box><size>2 1 1</size></box></geometry></collision>
+        <visual name='vis'><geometry><box><size>2 1 1</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Orange</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='box_6'>
+      <static>1</static>
+      <pose>-4 6 0.5 0 0 0.785</pose>
+      <link name='link'>
+        <collision name='col'><geometry><box><size>1.5 0.5 1</size></box></geometry></collision>
+        <visual name='vis'><geometry><box><size>1.5 0.5 1</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Orange</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ================================================================= -->
+    <!-- PERSON MODELS — 4 agents (moved by agent_manager.py)              -->
+    <!--   person_1 = target (owner_person)                                -->
+    <!--   person_2/3/4 = decoys                                           -->
+    <!-- ================================================================= -->
+
+    <include>
+      <uri>model://person_standing</uri>
+      <name>person_1</name>
+      <pose>4.0 6.0 0 0 0 3.14</pose>
+    </include>
+
+    <include>
+      <uri>model://person_standing</uri>
+      <name>person_2</name>
+      <pose>-8.0 7.0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://person_standing</uri>
+      <name>person_3</name>
+      <pose>-4.0 -5.0 0 0 0 1.57</pose>
+    </include>
+
+    <include>
+      <uri>model://person_standing</uri>
+      <name>person_4</name>
+      <pose>8.0 -5.0 0 0 0 -1.57</pose>
+    </include>
+
+    <!-- ================================================================= -->
+    <!-- CAMERA SENSOR BLOCK — reuses the depth camera from demo_world     -->
+    <!--   Placed at (13, 0, 4) for top-down demo overview (optional)      -->
+    <!-- ================================================================= -->
+
+    <!-- GUI camera starting view for demo presentation -->
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>15 -18 12 0 0.42 2.0</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+
+  </world>
+</sdf>

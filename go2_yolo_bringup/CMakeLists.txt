@@ -7,7 +7,7 @@ install(DIRECTORY launch config worlds rviz
   DESTINATION share/${PROJECT_NAME}
 )
 
-install(PROGRAMS scripts/scan_relay.py
+install(PROGRAMS scripts/scan_relay.py scripts/demo_scenario.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
