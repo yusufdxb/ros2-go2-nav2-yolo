@@ -107,7 +107,7 @@ source ~/go2_sim_env.sh
 ros2 launch go2_yolo_bringup yolo_nav_launch.py target_class:=person
 ```
 
-## Results Scaffold
+## Results
 
 Use [docs/RESULTS_TEMPLATE.md](docs/RESULTS_TEMPLATE.md) to publish:
 - navigation success rate
