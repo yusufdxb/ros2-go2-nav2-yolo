@@ -34,23 +34,11 @@ That does not make the repo weak. It just means the repo should be framed as:
 - a strong debugging/documentation project
 - not a misleading claim that simulated YOLO perception worked end to end when it did not
 
-## Architecture
+## Public Architecture
 
-```text
-Gazebo GO2 + sensors
-        |
-        +--> /scan ------------------------> scan_relay --------------------+
-        |                                                                   |
-        +--> camera / depth topics ---> detector_node (HW path)             |
-        |                                                                   +--> Nav2 + SLAM Toolbox
-        +--> sim_person_detector (sim path) --> /detected_objects ----------+
-                                                                            |
-                                                                    navigator_node
-                                                                            |
-                                                                         /cmd_vel
-                                                                            |
-                                                                       CHAMP gait
-```
+![GO2 Gazebo public architecture](docs/system_architecture.svg)
+
+Topic graph captured from the workspace: [frames_2026-03-17_04.00.57.pdf](frames_2026-03-17_04.00.57.pdf)
 
 ## What Makes This Repo Strong
 
@@ -74,6 +62,7 @@ Those are the kinds of issues autonomy teams actually spend time on.
 | `go2_yolo_navigator/` | goal generation and navigation interface |
 | `go2_yolo_msgs/` | custom messages |
 | `training/` | dataset collection and model training utilities |
+| `docs/RESULTS_TEMPLATE.md` | first benchmark template for honest public reporting |
 
 ## Detection Modes
 
@@ -118,6 +107,14 @@ source ~/go2_sim_env.sh
 ros2 launch go2_yolo_bringup yolo_nav_launch.py target_class:=person
 ```
 
+## Results Scaffold
+
+Use [docs/RESULTS_TEMPLATE.md](docs/RESULTS_TEMPLATE.md) to publish:
+- navigation success rate
+- final goal error
+- launch-to-ready startup time
+- detector update rate by mode
+
 ## Why Employers Should Care
 
 This repo is less impressive as a benchmark claim than as a systems project. That is the right framing. It shows that you can take a legged robot stack, a simulator, perception plumbing, navigation, and DDS/TF/Gazebo failure modes and turn them into a working reproducible demo.
@@ -126,6 +123,5 @@ This repo is less impressive as a benchmark claim than as a systems project. Tha
 
 The best remaining improvements would be:
 - a short demo video or GIF
-- a topic graph or architecture figure image
-- a concise results table for navigation success and final goal error in the sim scenario
+- one filled-in results table from repeated sim trials
 - a separate short note documenting the real-hardware detector path
