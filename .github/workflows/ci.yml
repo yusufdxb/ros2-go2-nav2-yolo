@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint (ruff)
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - run: pip install ruff
+      - name: Lint Python sources
+        run: |
+          ruff check \
+            go2_yolo_detector/go2_yolo_detector/ \
+            go2_yolo_navigator/go2_yolo_navigator/ \
+            go2_yolo_bringup/scripts/ \
+            evaluation/ \
+            --select E,F,W,I --ignore E501,E402
+
+  build:
+    name: Build (ROS 2 Humble)
+    runs-on: ubuntu-22.04
+    container:
+      image: ros:humble-ros-base
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install ROS dependencies
+        run: |
+          apt-get update -q
+          apt-get install -y \
+            python3-colcon-common-extensions \
+            ros-humble-nav2-bringup \
+            ros-humble-slam-toolbox \
+            ros-humble-robot-localization \
+            python3-pip
+
+      - name: Install Python dependencies
+        run: pip install ultralytics opencv-python-headless
+
+      - name: Build custom packages only
+        run: |
+          . /opt/ros/humble/setup.sh
+          colcon build --symlink-install --packages-select \
+            go2_yolo_msgs go2_yolo_detector go2_yolo_navigator go2_yolo_bringup \
+            --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo
