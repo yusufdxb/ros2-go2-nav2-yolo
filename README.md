@@ -115,13 +115,3 @@ Use [docs/RESULTS_TEMPLATE.md](docs/RESULTS_TEMPLATE.md) to publish:
 - launch-to-ready startup time
 - detector update rate by mode
 
-## Why Employers Should Care
-
-This repo is less impressive as a benchmark claim than as a systems project. That is the right framing. It shows that you can take a legged robot stack, a simulator, perception plumbing, navigation, and DDS/TF/Gazebo failure modes and turn them into a working reproducible demo.
-
-## Current Gaps
-
-The best remaining improvements would be:
-- a short demo video or GIF
-- one filled-in results table from repeated sim trials
-- a separate short note documenting the real-hardware detector path
