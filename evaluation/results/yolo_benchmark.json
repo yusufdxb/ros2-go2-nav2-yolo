@@ -1,0 +1,35 @@
+{
+  "timestamp": "2026-03-24T00:27:17Z",
+  "benchmarks": [
+    {
+      "model": "yolov8n.pt",
+      "image_size": "640x480",
+      "warmup_runs": 10,
+      "bench_runs": 100,
+      "latency_ms": {
+        "mean": 53.22,
+        "median": 52.86,
+        "p95": 56.7,
+        "p99": 59.87,
+        "min": 49.04,
+        "max": 59.87
+      },
+      "fps_mean": 18.8
+    },
+    {
+      "model": "yolov8s.pt",
+      "image_size": "640x480",
+      "warmup_runs": 10,
+      "bench_runs": 100,
+      "latency_ms": {
+        "mean": 116.7,
+        "median": 116.73,
+        "p95": 120.88,
+        "p99": 123.24,
+        "min": 111.97,
+        "max": 123.24
+      },
+      "fps_mean": 8.6
+    }
+  ]
+}
