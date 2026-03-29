@@ -42,10 +42,11 @@ from __future__ import annotations
 import rclpy
 import tf2_ros
 from geometry_msgs.msg import PoseArray
-from go2_yolo_msgs.msg import DetectedObject, DetectedObjectArray
 from rclpy.duration import Duration
 from rclpy.node import Node
 from std_msgs.msg import String
+
+from go2_yolo_msgs.msg import DetectedObject, DetectedObjectArray
 
 # ── Obstacle rectangles for LOS check ────────────────────────────────────────
 # Each entry: (cx, cy, half_width, half_height) in world/map frame (metres).

@@ -33,13 +33,14 @@ import rclpy
 import rclpy.time
 import tf2_ros
 from geometry_msgs.msg import PoseStamped
-from go2_yolo_msgs.msg import DetectedObjectArray
 from nav2_msgs.action import NavigateToPose
 from rclpy.action import ActionClient
 from rclpy.clock import ClockType
 from rclpy.duration import Duration
 from rclpy.node import Node
 from std_msgs.msg import String
+
+from go2_yolo_msgs.msg import DetectedObjectArray
 
 
 class NavigatorNode(Node):

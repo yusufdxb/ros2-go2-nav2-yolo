@@ -41,9 +41,10 @@ import time
 import numpy as np
 import rclpy
 import rclpy.time
-from go2_yolo_msgs.msg import DetectedObject, DetectedObjectArray
 from rclpy.node import Node
 from std_msgs.msg import String
+
+from go2_yolo_msgs.msg import DetectedObject, DetectedObjectArray
 
 # ── 2D Kalman filter (constant velocity) ─────────────────────────────────────
 

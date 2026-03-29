@@ -58,12 +58,13 @@ import cv2
 import numpy as np
 import rclpy
 from cv_bridge import CvBridge
-from go2_yolo_msgs.msg import DetectedObject, DetectedObjectArray
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy
 from sensor_msgs.msg import CameraInfo, Image
 from std_msgs.msg import String
 from ultralytics import YOLO
+
+from go2_yolo_msgs.msg import DetectedObject, DetectedObjectArray
 
 # ── Palette ───────────────────────────────────────────────────────────────────
 

@@ -46,7 +46,7 @@ jobs:
           rosdep install --from-paths . --ignore-src -r -y --rosdistro humble
 
       - name: Install Python dependencies
-        run: pip install --break-system-packages ultralytics opencv-python-headless
+        run: pip install ultralytics opencv-python-headless
 
       - name: Build custom packages only
         run: |
