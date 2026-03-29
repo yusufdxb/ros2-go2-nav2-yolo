@@ -35,16 +35,18 @@ jobs:
 
       - name: Install ROS dependencies
         run: |
+          . /opt/ros/humble/setup.sh
           apt-get update -q
           apt-get install -y \
             python3-colcon-common-extensions \
-            ros-humble-nav2-bringup \
-            ros-humble-slam-toolbox \
-            ros-humble-robot-localization \
-            python3-pip
+            python3-pip \
+            python3-rosdep
+          rosdep init || true
+          rosdep update
+          rosdep install --from-paths . --ignore-src -r -y --rosdistro humble
 
       - name: Install Python dependencies
-        run: pip install ultralytics opencv-python-headless
+        run: pip install --break-system-packages ultralytics opencv-python-headless
 
       - name: Build custom packages only
         run: |
