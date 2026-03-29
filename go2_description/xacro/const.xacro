@@ -83,13 +83,6 @@
     <xacro:property name="trunk_iyy" value="0.044483"/>
     <xacro:property name="trunk_iyz" value="0"/>
     <xacro:property name="trunk_izz" value="0.055683"/>
-    <!-- <xacro:property name="trunk_ixx" value="0.02448"/>
-    <xacro:property name="trunk_ixy" value="0.00012166"/>
-    <xacro:property name="trunk_ixz" value="0.0014849"/>
-    <xacro:property name="trunk_iyy" value="0.098077"/>
-    <xacro:property name="trunk_iyz" value="-3.12E-05"/>
-    <xacro:property name="trunk_izz" value="0.107"/> -->
-
     <!-- hip (left front) -->
     <xacro:property name="hip_mass" value="0.678"/>
     <!-- <xacro:property name="hip_mass" value="0.250"/> -->

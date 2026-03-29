@@ -11,6 +11,7 @@ Usage:
 """
 
 import os
+from pathlib import Path
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
@@ -26,6 +27,26 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+
+
+def _default_description_path(go2_desc_share: str) -> str:
+    env_override = os.environ.get("GO2_DESCRIPTION_XACRO")
+    if env_override:
+        return env_override
+
+    installed_path = os.path.join(go2_desc_share, "xacro", "go2_robot.xacro")
+
+    # In a typical colcon workspace, the installed launch file lives under:
+    #   <ws>/install/go2_yolo_bringup/share/go2_yolo_bringup/launch
+    # If the matching source xacro exists under <ws>/src/go2_description, prefer
+    # that copy so local source edits are not masked by a stale installed file.
+    launch_path = Path(__file__).resolve()
+    for parent in launch_path.parents:
+        candidate = parent / "src" / "go2_description" / "xacro" / "go2_robot.xacro"
+        if candidate.is_file():
+            return str(candidate)
+
+    return installed_path
 
 
 def generate_launch_description():
@@ -45,6 +66,15 @@ def generate_launch_description():
     declare_world = DeclareLaunchArgument(
         "world_file",
         default_value=os.path.join(go2_yolo_share, "worlds", "demo_world.world"),
+    )
+    declare_description_path = DeclareLaunchArgument(
+        "description_path",
+        default_value=_default_description_path(go2_desc_share),
+        description=(
+            "Path to the GO2 xacro/URDF used for robot_description. "
+            "Defaults to a source-tree xacro when a colcon workspace src/ copy "
+            "is available, otherwise falls back to the installed package share."
+        ),
     )
 
     # ── Gazebo ────────────────────────────────────────────────────────────
@@ -123,9 +153,7 @@ def generate_launch_description():
             "robot_name": "go2",
             "gazebo": "true",
             "rviz": "false",
-            "description_path": os.path.join(
-                go2_desc_share, "xacro", "go2_robot.xacro"
-            ),
+            "description_path": LaunchConfiguration("description_path"),
             "joints_map_path": os.path.join(
                 go2_yolo_share, "config", "joints", "joints.yaml"
             ),
@@ -179,6 +207,7 @@ def generate_launch_description():
     return LaunchDescription([
         declare_sim_time,
         declare_world,
+        declare_description_path,
         gzserver,
         delayed_gzclient,
         champ_bringup,
