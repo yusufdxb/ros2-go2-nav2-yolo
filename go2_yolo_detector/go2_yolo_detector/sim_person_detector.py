@@ -16,9 +16,9 @@ message type.
 """
 
 import rclpy
+from go2_yolo_msgs.msg import DetectedObject, DetectedObjectArray
 from rclpy.node import Node
 from std_msgs.msg import Header
-from go2_yolo_msgs.msg import DetectedObject, DetectedObjectArray
 
 
 class SimPersonDetector(Node):

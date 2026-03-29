@@ -33,16 +33,16 @@ Requires: libgazebo_ros_state.so loaded (added in gazebo_launch.py via
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 import rclpy
+from geometry_msgs.msg import Pose, PoseArray, PoseStamped
 from rclpy.node import Node
-from geometry_msgs.msg import PoseArray, PoseStamped, Pose
 from std_msgs.msg import String
 
 try:
-    from gazebo_msgs.srv import SetEntityState
     from gazebo_msgs.msg import EntityState
+    from gazebo_msgs.srv import SetEntityState
     _GAZEBO_AVAILABLE = True
 except ImportError:
     _GAZEBO_AVAILABLE = False

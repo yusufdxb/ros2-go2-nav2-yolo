@@ -56,17 +56,14 @@ from enum import Enum
 
 import cv2
 import numpy as np
-from ultralytics import YOLO
-
 import rclpy
+from cv_bridge import CvBridge
+from go2_yolo_msgs.msg import DetectedObject, DetectedObjectArray
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy
-from sensor_msgs.msg import Image, CameraInfo
+from sensor_msgs.msg import CameraInfo, Image
 from std_msgs.msg import String
-from cv_bridge import CvBridge
-
-from go2_yolo_msgs.msg import DetectedObject, DetectedObjectArray
-
+from ultralytics import YOLO
 
 # ── Palette ───────────────────────────────────────────────────────────────────
 
@@ -544,8 +541,10 @@ class DetectorNode(Node):
         obj.position.x  = float(xyz[0])
         obj.position.y  = float(xyz[1])
         obj.position.z  = float(xyz[2])
-        obj.bbox_x1 = x1; obj.bbox_y1 = y1
-        obj.bbox_x2 = x2; obj.bbox_y2 = y2
+        obj.bbox_x1 = x1
+        obj.bbox_y1 = y1
+        obj.bbox_x2 = x2
+        obj.bbox_y2 = y2
         return obj
 
     def _draw_box(self, vis: np.ndarray,

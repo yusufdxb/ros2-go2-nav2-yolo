@@ -25,14 +25,11 @@ ROS2 parameters:
 
 from __future__ import annotations
 
-import sys
 import time
 
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
-from geometry_msgs.msg import PoseStamped
-
 
 # ── Demo phase definitions ────────────────────────────────────────────────────
 

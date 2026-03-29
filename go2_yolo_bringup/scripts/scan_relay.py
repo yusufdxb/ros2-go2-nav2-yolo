@@ -14,7 +14,7 @@ SLAM only ever receives scans whose timestamps fall within its TF buffer.
 
 import rclpy
 from rclpy.node import Node
-from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy, DurabilityPolicy
+from rclpy.qos import DurabilityPolicy, HistoryPolicy, QoSProfile, ReliabilityPolicy
 from sensor_msgs.msg import LaserScan
 
 MAX_AGE_S = 1.0   # discard scans older than this many sim-seconds

@@ -39,19 +39,13 @@ ROS2 parameters:
 
 from __future__ import annotations
 
-import math
-
 import rclpy
-from rclpy.node import Node
-from rclpy.qos import QoSProfile, ReliabilityPolicy
-from geometry_msgs.msg import PoseArray, PoseStamped
-from std_msgs.msg import String, Header
 import tf2_ros
-import tf2_geometry_msgs
-from rclpy.duration import Duration
-
+from geometry_msgs.msg import PoseArray
 from go2_yolo_msgs.msg import DetectedObject, DetectedObjectArray
-
+from rclpy.duration import Duration
+from rclpy.node import Node
+from std_msgs.msg import String
 
 # ── Obstacle rectangles for LOS check ────────────────────────────────────────
 # Each entry: (cx, cy, half_width, half_height) in world/map frame (metres).

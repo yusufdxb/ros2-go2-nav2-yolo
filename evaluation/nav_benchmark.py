@@ -32,19 +32,17 @@ import argparse
 import csv
 import json
 import math
-import os
 import time
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import List, Optional, Tuple
 
 import rclpy
-from rclpy.node import Node
-from rclpy.action import ActionClient
-from nav2_msgs.action import NavigateToPose
-from geometry_msgs.msg import PoseStamped, PoseWithCovarianceStamped
-from nav_msgs.msg import Odometry
 from action_msgs.msg import GoalStatus
+from nav2_msgs.action import NavigateToPose
+from nav_msgs.msg import Odometry
+from rclpy.action import ActionClient
+from rclpy.node import Node
 
 try:
     from go2_yolo_msgs.msg import DetectedObjectArray
