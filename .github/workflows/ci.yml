@@ -52,5 +52,5 @@ jobs:
         run: |
           . /opt/ros/humble/setup.sh
           colcon build --symlink-install --packages-select \
-            go2_yolo_msgs go2_yolo_detector go2_yolo_navigator go2_yolo_bringup \
+            go2_description go2_yolo_msgs go2_yolo_detector go2_yolo_navigator go2_yolo_bringup \
             --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo
