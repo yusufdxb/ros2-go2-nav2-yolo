@@ -5,16 +5,7 @@
         <xacro:include filename="$(find go2_description)/xacro/hokuyo_utm30lx.urdf.xacro" />
         <!-- <xacro:include filename="$(find go2_description)/xacro/asus_camera.urdf.xacro" /> -->
 
-        <!-- <xacro:hokuyo_utm30lx 
-            name="hokuyo" 
-            parent="${base_name}" 
-            ros_topic="scan" 
-            update_rate="30" 
-            ray_count="1040" 
-            min_angle="130" 
-            max_angle="-130" >
-            <origin xyz="0.0 0.0 ${base_height / 2 + 0.04}" rpy="0 0 0"/>
-        </xacro:hokuyo_utm30lx> -->
+        <!-- <xacro:hokuyo_utm30lx name="hokuyo" parent="${base_name}" ros_topic="scan" update_rate="30" ray_count="1040" min_angle="130" max_angle="-130"><origin xyz="0.0 0.0 ${base_height / 2 + 0.04}" rpy="0 0 0"/></xacro:hokuyo_utm30lx> -->
 
         <!-- hls_lfcd_lds -->
         <xacro:hokuyo_utm30lx 
@@ -27,11 +18,7 @@
             max_angle="360" >
             <origin xyz="0.0 0.0 ${base_height / 2 + 0.04}" rpy="0 0 0"/>
         </xacro:hokuyo_utm30lx>        
-        <!-- <xacro:asus_camera 
-            parent="${base_name}" 
-            name="camera">
-            <origin xyz="${base_length / 2} 0.0 -${base_height / 2 + 0.01}" rpy="0 0 0"/>
-        </xacro:asus_camera> -->
+        <!-- <xacro:asus_camera parent="${base_name}" name="camera"><origin xyz="${base_length / 2} 0.0 -${base_height / 2 + 0.01}" rpy="0 0 0"/></xacro:asus_camera> -->
         
 
         <link name="imu_link">
@@ -57,26 +44,10 @@
                             <!-- <argument>~/out:=data</argument> -->
                             <remapping>~/out:=data</remapping>
                         </ros>
-                        <!-- <updateRate>50.0</updateRate>
-                        <bodyName>imu_link</bodyName>
-                        <topicName>imu/data</topicName>
-                        <accelDrift>0.005 0.005 0.005</accelDrift>
-                        <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
-                        <rateDrift>0.005 0.005 0.005 </rateDrift>
-                        <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
-                        <headingDrift>0.005</headingDrift>
-                        <headingGaussianNoise>0.005</headingGaussianNoise> -->
+                        <!-- <updateRate>50.0</updateRate><bodyName>imu_link</bodyName><topicName>imu/data</topicName><accelDrift>0.005 0.005 0.005</accelDrift><accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise><rateDrift>0.005 0.005 0.005</rateDrift><rateGaussianNoise>0.005 0.005 0.005</rateGaussianNoise><headingDrift>0.005</headingDrift><headingGaussianNoise>0.005</headingGaussianNoise> -->
                     </plugin>
                 </sensor>
             </gazebo>
-        <!-- <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
-        <xacro:VLP-16 parent="${base_name}" name="velodyne" topic="velodyne_points" hz="10" samples="1024" gpu="false" lasers="16" max_range="100">
-            <origin xyz="0 0 ${base_height / 2}" rpy="0 0 0" />
-        </xacro:VLP-16>
-
-        <xacro:include filename="$(find champ_arm_description)/urdf/champ_arm.urdf.xacro" />
-        <xacro:champ_arm parent="${base_name}">
-            <origin xyz="0.07 0.0 ${base_height / 2}" rpy="0 0 0"/>
-        </xacro:champ_arm> -->
+        <!-- <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/><xacro:VLP-16 parent="${base_name}" name="velodyne" topic="velodyne_points" hz="10" samples="1024" gpu="false" lasers="16" max_range="100"><origin xyz="0 0 ${base_height / 2}" rpy="0 0 0"/></xacro:VLP-16><xacro:include filename="$(find champ_arm_description)/urdf/champ_arm.urdf.xacro"/><xacro:champ_arm parent="${base_name}"><origin xyz="0.07 0.0 ${base_height / 2}" rpy="0 0 0"/></xacro:champ_arm> -->
     </xacro:macro>
 </robot>

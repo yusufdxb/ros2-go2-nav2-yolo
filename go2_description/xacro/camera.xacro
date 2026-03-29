@@ -1,20 +1,10 @@
-<!-- GO2 Robot Description with RGB-D Camera Plugin
-     Based on: https://github.com/arjun-sadananda/go2_nav2_ros2
-     Added: Gazebo RGB-D camera plugin for YOLOv8 + depth
-
-     Full mesh files and full URDF come from the upstream go2_nav2_ros2 repo.
-     Clone it and use go2_description from there — this file shows
-     the camera xacro addition to include in go2_robot.xacro.
--->
+<!-- GO2 Robot Description with RGB-D Camera Plugin. Based on: https://github.com/arjun-sadananda/go2_nav2_ros2. Added: Gazebo RGB-D camera plugin for YOLOv8 + depth. Full mesh files and full URDF come from the upstream go2_nav2_ros2 repo. -->
 <robot name="go2" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- Include base GO2 description from upstream -->
   <!-- xacro:include filename="$(find go2_description)/xacro/go2_base.xacro"/ -->
 
-  <!-- ══════════════════════════════════════════════════════
-       RGB-D Camera — mounted on GO2 head
-       Add this block to your go2_robot.xacro
-       ══════════════════════════════════════════════════════ -->
+  <!-- RGB-D Camera — mounted on GO2 head -->
 
   <link name="camera_link">
     <visual>
@@ -62,8 +52,7 @@
     <origin xyz="0 0 0" rpy="-1.5708 0 -1.5708"/>
   </joint>
 
-  <!-- Depth camera sensor — requires LIBGL_DRI3_DISABLE=1 passed to gzserver
-       via SetEnvironmentVariable in gazebo_launch.py for OGRE to init correctly. -->
+  <!-- Depth camera sensor — requires LIBGL_DRI3_DISABLE=1 passed to gzserver via gazebo_launch.py for OGRE to init correctly. -->
   <gazebo reference="camera_link">
     <sensor type="depth" name="go2_camera">
       <always_on>true</always_on>
