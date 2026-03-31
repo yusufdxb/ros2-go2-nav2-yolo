@@ -683,6 +683,24 @@
       <pose>2.0 0.0 0.0 0 0 0</pose>
     </include>
 
+    <include>
+      <uri>model://construction_cone</uri>
+      <name>construction_cone</name>
+      <pose>1.5 1.5 0.0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://coke_can</uri>
+      <name>coke_can</name>
+      <pose>2.5 -1.0 0.0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://cardboard_box</uri>
+      <name>cardboard_box</name>
+      <pose>0.0 2.0 0.0 0 0 0</pose>
+    </include>
+
     <gui fullscreen='0'>
       <camera name='user_camera'>
         <pose>10.1126 -10.4027 4.20251 0 0.275643 2.35619</pose>

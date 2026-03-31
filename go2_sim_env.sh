@@ -6,18 +6,13 @@ unset RMW_IMPLEMENTATION
 
 export DISPLAY=:1
 
-# Software rendering for gzclient — hardware GPU causes boost::shared_ptr<Camera>
-# assertion crash (gzclient rendering::Camera race condition on this MacBook Pro).
-# LIBGL_ALWAYS_SOFTWARE=1 bypasses the crash entirely.
-# NOTE: DRI_PRIME=0 = AMD (card1/renderD128), DRI_PRIME=1 = Intel (card2/renderD129)
-export DRI_PRIME=0
-export LIBGL_ALWAYS_SOFTWARE=1
-export LIBGL_DRI3_DISABLE=1      # prevents gzclient rendering::Camera crash with llvmpipe
+# Hardware GPU rendering (NVIDIA RTX 5070 on mewtwo).
+# LIBGL_DRI3_DISABLE=1 is still needed for the depth camera OGRE sensor init.
+export LIBGL_DRI3_DISABLE=1
 export OGRE_RTT_MODE=Copy
-export __GL_THREADED_OPTIMIZATIONS=0
 
 source /opt/ros/humble/setup.bash
-source ~/go2_yolo_ws/install/setup.bash
+source ~/workspace/ros2-go2-nav2-yolo/install/setup.bash
 
 export ROS_DOMAIN_ID=0
 

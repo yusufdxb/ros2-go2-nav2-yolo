@@ -33,9 +33,16 @@ locomotion stack.
 
 ## Demo
 
-The GO2 quadruped spawns in a Gazebo world with a `person_standing` model. The detection
-pipeline publishes the person's position and the robot autonomously navigates to stand
-~0.8 m in front of them.
+The GO2 quadruped spawns in a Gazebo world with detection targets. The detection
+pipeline publishes positions and the robot autonomously navigates toward them.
+
+### GO2 Camera View — Training Data Samples
+
+| Person + Coke Can | Cardboard Box | Person (side) | Box (close) |
+|:-:|:-:|:-:|:-:|
+| ![person_coke](docs/images/go2_camera_person_coke.jpg) | ![box](docs/images/go2_camera_box.jpg) | ![person_side](docs/images/go2_camera_person_side.jpg) | ![box_close](docs/images/go2_camera_box_close.jpg) |
+
+*Frames captured from the GO2's onboard RGB camera while autonomously driving around objects in the Gazebo demo world.*
 
 ---
 
@@ -54,17 +61,16 @@ Sim detector ──► person position (map frame) ──► navigator_node
                                            GO2 walks to the person
 ```
 
-1. GO2 spawns in a Gazebo world with a `person_standing` model at `(2, 0, 0)`
+1. GO2 spawns in a Gazebo world with detection targets: `person_standing` at `(2,0,0)`, `construction_cone` at `(1.5,1.5,0)`, `coke_can` at `(2.5,-1,0)`, `cardboard_box` at `(0,2,0)`
 2. `sim_person_detector` publishes the person's map-frame position at 2 Hz
 3. `navigator_node` receives detections, computes a goal 0.8 m in front of the person, and sends a Nav2 `NavigateToPose` action
 4. Nav2 (SLAM Toolbox + Regulated Pure Pursuit) plans a path and publishes `/cmd_vel`
 5. CHAMP translates `/cmd_vel` into quadruped gait — the GO2 walks there
 
-> **Note on YOLO:** YOLOv8 detection works on real hardware. In simulation, Gazebo's
-> software rendering (llvmpipe) produces images too synthetic for YOLOv8n to reliably
-> detect the `person_standing` model. The `sim_person_detector` node bypasses YOLO by
-> publishing the model's known world position directly. Swap back to `detector_node` for
-> real hardware.
+> **Note on YOLO:** Pretrained YOLOv8n struggles with Gazebo's synthetic rendering.
+> The `sim_person_detector` node bypasses YOLO by publishing known model positions
+> directly. A custom training pipeline (see [Training Pipeline](#custom-yolo-training-pipeline))
+> is included to fine-tune YOLOv8 on simulation data. Use `detector_node` for real hardware.
 
 ---
 
@@ -142,10 +148,18 @@ ros2-go2-nav2-yolo/
 ├── go2_yolo_navigator/               # Nav2 goal publisher
 │   └── go2_yolo_navigator/
 │       └── navigator_node.py
-└── go2_yolo_msgs/                    # Custom messages
-    └── msg/
-        ├── DetectedObject.msg
-        └── DetectedObjectArray.msg
+├── go2_yolo_msgs/                    # Custom messages
+│   └── msg/
+│       ├── DetectedObject.msg
+│       └── DetectedObjectArray.msg
+├── training/                         # YOLO training pipeline
+│   ├── record_session.py             # Drive + record training data
+│   ├── collect_frames.py             # Extract frames from rosbags
+│   ├── augment_dataset.py            # Offline data augmentation
+│   ├── train.sh                      # Training orchestrator
+│   └── export_model.sh               # Export to TorchScript/ONNX
+└── docs/
+    └── images/                       # Camera samples for README
 ```
 
 ---
@@ -181,7 +195,8 @@ sudo apt install \
 ### Python packages
 
 ```bash
-pip install ultralytics opencv-python numpy
+pip install ultralytics opencv-python numpy    # detection + inference
+pip install rosbags albumentations             # training pipeline (optional)
 ```
 
 ---
@@ -274,16 +289,19 @@ ros2 daemon stop && ros2 daemon start
 Everything that needed fixing from the upstream GO2+Nav2 base. Useful if you're
 building something similar.
 
-### 1. Software rendering — `go2_sim_env.sh`
+### 1. Rendering — `go2_sim_env.sh`
 
-Machines without a dedicated GPU (or using Mesa/llvmpipe) need several env vars
-to prevent Gazebo from crashing:
+For **hardware GPU** (NVIDIA), only two env vars are needed:
+
+```bash
+export LIBGL_DRI3_DISABLE=1       # required for depth camera OGRE sensor init
+export OGRE_RTT_MODE=Copy         # prevents OGRE render-to-texture crash
+```
+
+For **software rendering** (no GPU / Mesa / llvmpipe), also add:
 
 ```bash
 export LIBGL_ALWAYS_SOFTWARE=1    # force software rendering
-export LIBGL_DRI3_DISABLE=1       # prevents gzclient rendering::Camera crash
-export OGRE_RTT_MODE=Copy         # prevents OGRE render-to-texture crash
-export DISPLAY=:1                 # Xorg virtual display
 ```
 
 `gzserver` must be launched via `ExecuteProcess` with `additional_env` — not
@@ -391,6 +409,49 @@ data_files=[
 - **Odometry drift:** CHAMP state estimation drifts over long distances. Fine for short demos.
 - **Robot gets stuck:** If the robot wanders far before T3 launches, the SLAM costmap may have phantom obstacles blocking the path. Kill everything and restart for a clean map.
 - **Slow startup:** SLAM needs 20-30 s to initialize. The `map` frame will not exist in RViz until the first scan is processed successfully.
+
+---
+
+## Custom YOLO Training Pipeline
+
+The repo includes a pipeline for collecting and training on simulation data. See
+[YOLO_TRAINING_PLAN.md](YOLO_TRAINING_PLAN.md) for the full strategy.
+
+### Collect training data
+
+```bash
+# 1. Launch the simulation (Terminal 1)
+source go2_sim_env.sh && ros2 launch go2_yolo_bringup gazebo_launch.py
+
+# 2. Drive the robot around objects while recording (Terminal 2)
+source go2_sim_env.sh && python3 training/record_session.py
+# Records camera, depth, odom, TF to ~/datasets/raw_bags/session_YYYYMMDD_HHMM/
+
+# 3. Extract frames at 3 fps
+python3 training/collect_frames.py extract \
+    --bag ~/datasets/raw_bags/session_YYYYMMDD_HHMM \
+    --out ~/datasets/raw_frames/session_YYYYMMDD_HHMM \
+    --fps 3
+
+# 4. Label frames (Label Studio / Roboflow), then split
+python3 training/collect_frames.py split \
+    --frames ~/datasets/raw_frames/session_YYYYMMDD_HHMM \
+    --dataset ~/datasets/go2_perception
+
+# 5. Train
+bash training/train.sh --data ~/datasets/go2_perception/data.yaml --epochs 50
+```
+
+### Training scripts
+
+| Script | Purpose |
+|--------|---------|
+| `training/record_session.py` | Drives GO2 around world objects while recording rosbag |
+| `training/collect_frames.py` | Extracts frames from bags, splits into train/val/test |
+| `training/augment_dataset.py` | Offline augmentation (albumentations) |
+| `training/auto_label.py` | Auto-labeler using Gazebo model states (in development) |
+| `training/train.sh` | YOLOv8 training orchestrator |
+| `training/export_model.sh` | Export to TorchScript/ONNX |
 
 ---
 
