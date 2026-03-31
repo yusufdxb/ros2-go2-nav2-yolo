@@ -14,6 +14,20 @@ locomotion stack.
 
 ---
 
+## What Works Now
+
+- ✅ GO2 spawns and walks in Gazebo Classic (CHAMP quadruped gait controller)
+- ✅ SLAM Toolbox builds a 2D occupancy map from LiDAR scans
+- ✅ Nav2 plans and executes paths to goal poses (Regulated Pure Pursuit controller)
+- ✅ Person detection → Nav2 goal → robot walks to ~0.8 m standoff in front of person
+- ✅ YOLOv8n: 53 ms mean inference latency, 18.8 fps on CPU — real-time capable on GO2 hardware
+- ✅ All DDS/TF/SLAM startup race conditions documented and fixed (see [Key Design Decisions](#key-design-decisions--bug-fixes))
+- ✅ Real-hardware `detector_node` (YOLOv8n + RealSense depth fusion) included alongside the sim path
+
+> Benchmark data and Nav2 parameter justifications: [RESULTS.md](RESULTS.md)
+
+---
+
 ## Demo
 
 The GO2 quadruped spawns in a Gazebo world with a `person_standing` model. The detection
