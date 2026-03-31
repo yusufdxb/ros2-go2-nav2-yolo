@@ -40,18 +40,20 @@ _GO2 camera runs at 30 fps. Both models have sufficient headroom for real-time d
 
 ## Navigation Performance (Gazebo Simulation)
 
-> **Status: pending first benchmark run.**
-> Run `python3 evaluation/nav_benchmark.py` with the full stack active and paste results here.
+Navigation benchmarks are collected with the full Gazebo + Nav2 + CHAMP stack running.
+The benchmark script is at `evaluation/nav_benchmark.py` — run it with the stack active
+and paste results here.
 
-| Metric | Value |
-|--------|-------|
-| Success rate | — |
-| Mean time-to-goal | — |
-| Mean path deviation | — |
-| First detection latency | — |
-| Trials | — |
+```bash
+source ~/go2_sim_env.sh
+ros2 launch go2_yolo_bringup gazebo_launch.py         # T1
+ros2 launch go2_yolo_bringup navigation_launch.py      # T2
+ros2 launch go2_yolo_bringup yolo_nav_launch.py        # T3
+python3 evaluation/nav_benchmark.py --trials 10 --goal-x 2.0 --goal-y 0.0
+```
 
-_Goal: `person_standing` at `(2, 0, 0)` in the demo world. Robot starts at origin._
+Results will be appended here once collected on target hardware. The Nav2 parameter choices
+(RPP controller, inflation radius, SLAM throttle) are documented below.
 
 ---
 

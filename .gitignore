@@ -4,3 +4,16 @@ log/
 __pycache__/
 *.pyc
 *.egg-info/
+
+# Ruff cache
+.ruff_cache/
+
+# ML model weights and export artifacts
+*.pt
+*.onnx
+*.engine
+
+# Training run outputs and datasets
+training/datasets/
+training/runs/
+training/weights/

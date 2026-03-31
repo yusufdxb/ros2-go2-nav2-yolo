@@ -12,6 +12,9 @@ locomotion stack.
 > **Related:** This demo isolates the Nav2 + detection pipeline from my
 > [GO2 Seeing-Eye Dog](https://github.com/yusufdxb/GO2-seeing-eye-dog) thesis project.
 
+> **Results:** YOLOv8n — 53 ms / 18.8 fps on CPU. YOLOv8s — 117 ms / 8.6 fps on CPU.
+> Full benchmark data and Nav2 parameter rationale: [RESULTS.md](RESULTS.md)
+
 ---
 
 ## What Works Now
