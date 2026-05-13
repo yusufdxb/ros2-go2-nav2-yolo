@@ -48,17 +48,18 @@ pipeline publishes positions and the robot autonomously navigates toward them.
 
 ## What It Does
 
-```
-Sim detector ──► person position (map frame) ──► navigator_node
-                                                        │
-                                                        ▼
-                                               Nav2 NavigateToPose
-                                                        │
-                                                        ▼
-                                           CHAMP quadruped controller
-                                                        │
-                                                        ▼
-                                           GO2 walks to the person
+```mermaid
+graph TD
+    SD[Sim detector]
+    NN[navigator_node]
+    N2[Nav2 NavigateToPose]
+    CC[CHAMP quadruped controller]
+    GO2[GO2 walks to the person]
+
+    SD -->|person position, map frame| NN
+    NN --> N2
+    N2 --> CC
+    CC --> GO2
 ```
 
 1. GO2 spawns in a Gazebo world with detection targets: `person_standing` at `(2,0,0)`, `construction_cone` at `(1.5,1.5,0)`, `coke_can` at `(2.5,-1,0)`, `cardboard_box` at `(0,2,0)`
@@ -76,39 +77,21 @@ Sim detector ──► person position (map frame) ──► navigator_node
 
 ## Architecture
 
-```
-┌────────────────────────────────────────────────────────┐
-│                    Gazebo Classic                       │
-│  GO2 URDF  |  Hokuyo LiDAR  |  RGB-D Camera  |  IMU   │
-└────────────────────────────────────────────────────────┘
-     │ /scan   │ /go2/camera/*   │ /joint_states   │ /imu
-     ▼
-┌──────────────────────────────┐
-│  scan_relay node             │  filters stale scans (FastDDS
-│  /scan → /scan_slam          │  history replay bug), forwards
-└──────────────────────────────┘  to SLAM with correct timestamps
-     │ /scan_slam
-     ▼
-┌───────────────────────────────────────────────────────┐
-│  Nav2 Stack                                           │
-│  SLAM Toolbox  |  Regulated Pure Pursuit  |  BT Nav  │
-└───────────────────────────────────────────────────────┘
-     ▲ NavigateToPose action
-     │
-┌──────────────────────────────┐
-│  navigator_node              │◄── /detected_objects
-│  computes goal pose          │
-└──────────────────────────────┘
-     ▲
-┌──────────────────────────────┐
-│  sim_person_detector         │  publishes person at (2,0,0)
-│  (or detector_node for HW)   │  in map frame @ 2 Hz
-└──────────────────────────────┘
-     │ /cmd_vel
-     ▼
-┌──────────────────────────────┐
-│  CHAMP Controller            │  quadruped gait + EKF odometry
-└──────────────────────────────┘
+```mermaid
+graph TD
+    Gazebo["Gazebo Classic: GO2 URDF, Hokuyo LiDAR, RGB-D Camera, IMU"]
+    Relay["scan_relay node, filters stale scans (FastDDS history replay bug), forwards to SLAM with correct timestamps"]
+    Nav2["Nav2 Stack: SLAM Toolbox, Regulated Pure Pursuit, BT Nav"]
+    NavNode["navigator_node, computes goal pose"]
+    SimDet["sim_person_detector (or detector_node for HW), publishes person at (2,0,0) in map frame @ 2 Hz"]
+    CHAMP["CHAMP Controller, quadruped gait + EKF odometry"]
+
+    Gazebo -->|/scan| Relay
+    Gazebo -->|/go2/camera/*, /joint_states, /imu| Nav2
+    Relay -->|/scan_slam| Nav2
+    SimDet -->|/detected_objects| NavNode
+    NavNode -->|NavigateToPose action| Nav2
+    Nav2 -->|/cmd_vel| CHAMP
 ```
 
 ---
