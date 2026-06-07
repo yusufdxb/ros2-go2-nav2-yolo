@@ -1,4 +1,4 @@
-# Results — ros2-go2-nav2-yolo
+# Results: ros2-go2-nav2-yolo
 
 Quantitative evaluation of the Nav2 + YOLO detection pipeline on the Unitree GO2 simulation.
 
@@ -20,7 +20,7 @@ python3 evaluation/nav_benchmark.py --trials 10 --goal-x 2.0 --goal-y 0.0
 
 ---
 
-## YOLO Detection — Inference Latency Benchmark
+## YOLO Detection: Inference Latency Benchmark
 
 Measured on synthetic 640×480 RGB frames (GO2 camera resolution).
 100 runs after 10 warmup runs. Generated: `2026-03-24T00:27:17Z`
@@ -41,7 +41,7 @@ _GO2 camera runs at 30 fps. Both models have sufficient headroom for real-time d
 ## Navigation Performance (Gazebo Simulation)
 
 Navigation benchmarks are collected with the full Gazebo + Nav2 + CHAMP stack running.
-The benchmark script is at `evaluation/nav_benchmark.py` — run it with the stack active
+The benchmark script is at `evaluation/nav_benchmark.py`: run it with the stack active
 and paste results here.
 
 ```bash

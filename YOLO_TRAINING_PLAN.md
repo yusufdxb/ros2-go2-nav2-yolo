@@ -1,4 +1,4 @@
-# YOLOv8 Custom Training Plan — Gazebo Simulation
+# YOLOv8 Custom Training Plan: Gazebo Simulation
 
 This file serves as a quick-reference guide for the custom training pipeline to enable the Unitree Go2 to detect simulation-specific models.
 
@@ -11,7 +11,7 @@ Since Gazebo's `person_standing` model is synthetic and often fails with pretrai
 ## 2. Preparation Checklist
 - [ ] **Define Items:** List models besides `person_standing` (e.g., `construction_cone`, `coke_can`).
 - [ ] **World Setup:** Ensure these models are in your Gazebo `.world` file.
-- [ ] **Record Bag:** Move the robot around the models and record a 2–3 minute bag.
+- [ ] **Record Bag:** Move the robot around the models and record a 2-3 minute bag.
 
 ## 3. Training Workflow
 ```bash
