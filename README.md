@@ -397,8 +397,7 @@ data_files=[
 
 ## Custom YOLO Training Pipeline
 
-The repo includes a pipeline for collecting and training on simulation data. See
-[YOLO_TRAINING_PLAN.md](YOLO_TRAINING_PLAN.md) for the full strategy.
+The repo includes a pipeline for collecting and training on simulation data.
 
 ### Collect training data
 
