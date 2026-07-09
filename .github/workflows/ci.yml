@@ -42,14 +42,15 @@ jobs:
             python3-pip \
             python3-rosdep
           rosdep init || true
-          rosdep update
+          # retry: raw.githubusercontent.com 429s on shared-runner IPs
+          for i in 1 2 3 4 5; do rosdep update && break || sleep 20; done
           rosdep install --from-paths . --ignore-src -r -y --rosdistro humble
 
       - name: Install Python dependencies
         run: |
           # setuptools>=71 calls canonicalize_version(strip_trailing_zero=...),
           # which needs packaging>=22; the Humble image ships an older one.
-          pip install "packaging>=22"
+          pip install "setuptools<80" "packaging>=22"
           pip install ultralytics opencv-python-headless
 
       - name: Build custom packages only
