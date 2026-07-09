@@ -46,7 +46,11 @@ jobs:
           rosdep install --from-paths . --ignore-src -r -y --rosdistro humble
 
       - name: Install Python dependencies
-        run: pip install ultralytics opencv-python-headless
+        run: |
+          # setuptools>=71 calls canonicalize_version(strip_trailing_zero=...),
+          # which needs packaging>=22; the Humble image ships an older one.
+          pip install "packaging>=22"
+          pip install ultralytics opencv-python-headless
 
       - name: Build custom packages only
         run: |
