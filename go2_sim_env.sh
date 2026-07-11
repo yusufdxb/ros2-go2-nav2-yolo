@@ -6,7 +6,7 @@ unset RMW_IMPLEMENTATION
 
 export DISPLAY=:1
 
-# Hardware GPU rendering (NVIDIA RTX 5070 on mewtwo).
+# Hardware GPU rendering (an NVIDIA (Blackwell) consumer GPU on the dev workstation).
 # LIBGL_DRI3_DISABLE=1 is still needed for the depth camera OGRE sensor init.
 export LIBGL_DRI3_DISABLE=1
 export OGRE_RTT_MODE=Copy
