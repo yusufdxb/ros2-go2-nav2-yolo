@@ -187,19 +187,18 @@
             <hardware>
                 <plugin>gazebo_ros2_control/GazeboSystem</plugin>
             </hardware>
-            <!-- ********************** FRONT RIGHT JOINTS *********************************  -->
             <joint name="${name}_hip_joint">
-                <command_interface name="effort"/> 
+                <command_interface name="effort"/>
                 <state_interface name="position"/>
                 <state_interface name="velocity"/>
             </joint>
             <joint name="${name}_upper_leg_joint">
-                <command_interface name="effort"/> 
+                <command_interface name="effort"/>
                 <state_interface name="position"/>
                 <state_interface name="velocity"/>
             </joint>
             <joint name="${name}_lower_leg_joint">
-                <command_interface name="effort"/> 
+                <command_interface name="effort"/>
                 <state_interface name="position"/>
                 <state_interface name="velocity"/>
             </joint>
