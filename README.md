@@ -1,7 +1,7 @@
-# GO2 Nav2 + YOLOv8 — Unitree Gazebo Demo
+# GO2 Nav2 + YOLOv8: Unitree Gazebo Demo
 
 A Gazebo Classic simulation of the **Unitree GO2 quadruped** using a **person detector**
-and **Nav2** to autonomously navigate toward a target — running the full CHAMP legged
+and **Nav2** to autonomously navigate toward a target, running the full CHAMP legged
 locomotion stack.
 
 ![ROS2](https://img.shields.io/badge/ROS_2-Humble-blue)
@@ -12,20 +12,20 @@ locomotion stack.
 > **Related:** This demo isolates the Nav2 + detection pipeline from my
 > [GO2 Seeing-Eye Dog](https://github.com/yusufdxb/GO2-seeing-eye-dog) thesis project.
 
-> **Results:** YOLOv8n — 53 ms / 18.8 fps on CPU. YOLOv8s — 117 ms / 8.6 fps on CPU.
+> **Results:** YOLOv8n, 53 ms / 18.8 fps on CPU. YOLOv8s, 117 ms / 8.6 fps on CPU.
 > Full benchmark data and Nav2 parameter rationale: [RESULTS.md](RESULTS.md)
 
 ---
 
 ## What Works Now
 
-- ✅ GO2 spawns and walks in Gazebo Classic (CHAMP quadruped gait controller)
-- ✅ SLAM Toolbox builds a 2D occupancy map from LiDAR scans
-- ✅ Nav2 plans and executes paths to goal poses (Regulated Pure Pursuit controller)
-- ✅ Person detection → Nav2 goal → robot walks to ~0.8 m standoff in front of person
-- ✅ YOLOv8n: 53 ms mean inference latency, 18.8 fps on CPU — real-time capable on GO2 hardware
-- ✅ All DDS/TF/SLAM startup race conditions documented and fixed (see [Key Design Decisions](#key-design-decisions--bug-fixes))
-- ✅ Real-hardware `detector_node` (YOLOv8n + RealSense depth fusion) included alongside the sim path
+- GO2 spawns and walks in Gazebo Classic (CHAMP quadruped gait controller)
+- SLAM Toolbox builds a 2D occupancy map from LiDAR scans
+- Nav2 plans and executes paths to goal poses (Regulated Pure Pursuit controller)
+- Person detection → Nav2 goal → robot walks to ~0.8 m standoff in front of person
+- YOLOv8n: 53 ms mean inference latency, 18.8 fps on CPU, real-time capable on GO2 hardware
+- All DDS/TF/SLAM startup race conditions documented and fixed (see [Key Design Decisions](#key-design-decisions--bug-fixes))
+- Real-hardware `detector_node` (YOLOv8n + RealSense depth fusion) included alongside the sim path
 
 > Benchmark data and Nav2 parameter justifications: [RESULTS.md](RESULTS.md)
 
@@ -36,7 +36,7 @@ locomotion stack.
 The GO2 quadruped spawns in a Gazebo world with detection targets. The detection
 pipeline publishes positions and the robot autonomously navigates toward them.
 
-### GO2 Camera View — Training Data Samples
+### GO2 Camera View: Training Data Samples
 
 | Person + Coke Can | Cardboard Box | Person (side) | Box (close) |
 |:-:|:-:|:-:|:-:|
@@ -66,7 +66,7 @@ graph TD
 2. `sim_person_detector` publishes the person's map-frame position at 2 Hz
 3. `navigator_node` receives detections, computes a goal 0.8 m in front of the person, and sends a Nav2 `NavigateToPose` action
 4. Nav2 (SLAM Toolbox + Regulated Pure Pursuit) plans a path and publishes `/cmd_vel`
-5. CHAMP translates `/cmd_vel` into quadruped gait — the GO2 walks there
+5. CHAMP translates `/cmd_vel` into quadruped gait, the GO2 walks there
 
 > **Note on YOLO:** Pretrained YOLOv8n struggles with Gazebo's synthetic rendering.
 > The `sim_person_detector` node bypasses YOLO by publishing known model positions
@@ -221,15 +221,15 @@ chmod +x ~/go2_sim_env.sh
 # Kill any leftover processes first
 pkill -f gzserver; pkill -f gzclient; pkill -f ros2; sleep 3
 
-# T1 — Gazebo + GO2 + CHAMP controller
+# T1: Gazebo + GO2 + CHAMP controller
 source ~/go2_sim_env.sh && ros2 launch go2_yolo_bringup gazebo_launch.py
 # Wait ~30s for robot to spawn and start walking
 
-# T2 — Nav2 + SLAM Toolbox + RViz
+# T2: Nav2 + SLAM Toolbox + RViz
 source ~/go2_sim_env.sh && ros2 launch go2_yolo_bringup navigation_launch.py
 # Wait ~30s for SLAM to build initial map (watch for map frame in RViz)
 
-# T3 — Sim detector + navigator (navigates to person automatically)
+# T3: Sim detector + navigator (navigates to person automatically)
 source ~/go2_sim_env.sh && ros2 launch go2_yolo_bringup yolo_nav_launch.py target_class:=person
 ```
 
@@ -248,8 +248,8 @@ ros2 action send_goal /navigate_to_pose nav2_msgs/action/NavigateToPose \
 
 ### RViz Nav2 goal tool
 
-Use the **5th toolbar button** (`nav2_rviz_plugins/GoalTool`) — the target/arrow icon.
-**Not** the "2D Goal Pose" button — that sends to `/goal_pose` which `bt_navigator` ignores.
+Use the **5th toolbar button** (`nav2_rviz_plugins/GoalTool`), the target/arrow icon.
+**Not** the "2D Goal Pose" button, that sends to `/goal_pose` which `bt_navigator` ignores.
 
 ### Teleop (to build map before navigating)
 
@@ -272,7 +272,7 @@ ros2 daemon stop && ros2 daemon start
 Everything that needed fixing from the upstream GO2+Nav2 base. Useful if you're
 building something similar.
 
-### 1. Rendering — `go2_sim_env.sh`
+### 1. Rendering: `go2_sim_env.sh`
 
 For **hardware GPU** (NVIDIA), only two env vars are needed:
 
@@ -287,7 +287,7 @@ For **software rendering** (no GPU / Mesa / llvmpipe), also add:
 export LIBGL_ALWAYS_SOFTWARE=1    # force software rendering
 ```
 
-`gzserver` must be launched via `ExecuteProcess` with `additional_env` — not
+`gzserver` must be launched via `ExecuteProcess` with `additional_env`: not
 `SetEnvironmentVariable` + `IncludeLaunchDescription`, which does **not** reliably
 propagate env vars to child processes.
 
@@ -295,7 +295,7 @@ propagate env vars to child processes.
 
 **Problem:** FastDDS replays its RELIABLE writer history to new readers. SLAM starts
 after the robot, so it receives a flood of old scan messages with timestamps before
-its TF buffer exists — drops them all with `"timestamp earlier than all data in
+its TF buffer exists, drops them all with `"timestamp earlier than all data in
 transform cache"`.
 
 **Fix:** `scan_relay.py` subscribes to `/scan` with BEST_EFFORT QoS (bypasses history
@@ -327,7 +327,7 @@ it defaults to `base_link` and SLAM receives the wrong transform chain:
 <frame_name>${name}_frame</frame_name>
 ```
 
-### 5. Nav2 controller — DWB → RegulatedPurePursuit
+### 5. Nav2 controller: DWB → RegulatedPurePursuit
 
 DWB was unstable with the GO2's quadruped motion model. Switched to
 `RegulatedPurePursuitController` with `use_rotate_to_heading: false` to prevent
@@ -341,7 +341,7 @@ FastDDS (the default).
 
 ### 7. YOLO detection in simulation
 
-YOLOv8n cannot detect the `person_standing` Gazebo model — software rendering
+YOLOv8n cannot detect the `person_standing` Gazebo model, software rendering
 produces images too synthetic (wrong textures, lighting). Two detection modes:
 
 | Mode | Node | Use case |
@@ -349,7 +349,7 @@ produces images too synthetic (wrong textures, lighting). Two detection modes:
 | `sim_person_detector` | Publishes hardcoded position at (2,0,0) in map frame | Simulation |
 | `detector_node` | YOLOv8n + depth image fusion | Real hardware |
 
-`sim_person_detector` uses a timer (2 Hz) — no `/gazebo/model_states` dependency
+`sim_person_detector` uses a timer (2 Hz), no `/gazebo/model_states` dependency
 (the `gazebo_ros_state` plugin was unreliable at runtime).
 
 ### 8. Camera depth scale
@@ -366,7 +366,7 @@ cause erratic robot motion.
 ### 10. Executable wrapper scripts
 
 ROS2 launch finds executables in `lib/<package>/`. Python `console_scripts` installs
-to `bin/` — the launch system won't find them. Fix: add a shell wrapper script to
+to `bin/`: the launch system won't find them. Fix: add a shell wrapper script to
 `scripts/` and include it in `data_files` in `setup.py`:
 
 ```python
@@ -380,7 +380,7 @@ data_files=[
 ## RViz Tips
 
 - Set **Fixed Frame** to `odom` first, then switch to `map` once SLAM builds the map
-- Map updates lag ~1 s — normal with `map_update_interval: 1.0`
+- Map updates lag ~1 s, normal with `map_update_interval: 1.0`
 - If the map frame doesn't appear within 30 s of launching T2, teleop the robot to
   trigger scan processing
 
@@ -397,8 +397,7 @@ data_files=[
 
 ## Custom YOLO Training Pipeline
 
-The repo includes a pipeline for collecting and training on simulation data. See
-[YOLO_TRAINING_PLAN.md](YOLO_TRAINING_PLAN.md) for the full strategy.
+The repo includes a pipeline for collecting and training on simulation data.
 
 ### Collect training data
 
@@ -440,9 +439,9 @@ bash training/train.sh --data ~/datasets/go2_perception/data.yaml --epochs 50
 
 ## Credits
 
-- [arjun-sadananda/go2_nav2_ros2](https://github.com/arjun-sadananda/go2_nav2_ros2) — GO2 + Nav2 Gazebo base
-- [chvmp/champ](https://github.com/chvmp/champ) — CHAMP quadruped controller
-- [unitreerobotics/unitree_ros](https://github.com/unitreerobotics/unitree_ros) — GO2 URDF/meshes
+- [arjun-sadananda/go2_nav2_ros2](https://github.com/arjun-sadananda/go2_nav2_ros2), GO2 + Nav2 Gazebo base
+- [chvmp/champ](https://github.com/chvmp/champ), CHAMP quadruped controller
+- [unitreerobotics/unitree_ros](https://github.com/unitreerobotics/unitree_ros), GO2 URDF/meshes
 
 ---
 
