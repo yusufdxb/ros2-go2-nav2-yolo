@@ -17,6 +17,8 @@ from rclpy.node import Node
 from rclpy.qos import DurabilityPolicy, HistoryPolicy, QoSProfile, ReliabilityPolicy
 from sensor_msgs.msg import LaserScan
 
+from scan_filter import scan_age_seconds, should_forward_scan
+
 MAX_AGE_S = 1.0   # discard scans older than this many sim-seconds
 
 
@@ -42,10 +44,18 @@ class ScanRelay(Node):
         if now_ns == 0:
             return  # sim clock not yet received
 
-        scan_ns = msg.header.stamp.sec * 10**9 + msg.header.stamp.nanosec
-        age_s = (now_ns - scan_ns) / 1e9
+        age_s = scan_age_seconds(
+            now_ns,
+            msg.header.stamp.sec,
+            msg.header.stamp.nanosec,
+        )
 
-        if age_s > MAX_AGE_S:
+        if not should_forward_scan(
+            now_ns,
+            msg.header.stamp.sec,
+            msg.header.stamp.nanosec,
+            MAX_AGE_S,
+        ):
             self._dropped += 1
             if self._dropped % 20 == 1:
                 self.get_logger().warn(
