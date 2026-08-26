@@ -11,4 +11,8 @@ install(PROGRAMS scripts/scan_relay.py scripts/demo_scenario.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
+install(FILES scripts/scan_filter.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 ament_package()

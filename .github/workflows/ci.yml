@@ -22,8 +22,12 @@ jobs:
             go2_yolo_detector/go2_yolo_detector/ \
             go2_yolo_navigator/go2_yolo_navigator/ \
             go2_yolo_bringup/scripts/ \
+            go2_yolo_bringup/test/ \
             evaluation/ \
             --select E,F,W,I --ignore E501,E402
+
+      - name: Test scan timestamp filtering
+        run: python -m unittest discover -s go2_yolo_bringup/test -v
 
   build:
     name: Build (ROS 2 Humble)
